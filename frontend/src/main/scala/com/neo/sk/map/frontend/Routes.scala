@@ -17,5 +17,13 @@ object Routes {
     val minus = counterRoot + "/minus"
   }
 
+  object MapRoute{
+    val mapRoot = baseUrl + "/map"
+    val home = mapRoot + "/home"
+    val text=mapRoot+"/text"
+  }
+
+
+
 
 }

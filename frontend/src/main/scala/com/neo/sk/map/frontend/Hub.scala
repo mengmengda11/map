@@ -1,5 +1,6 @@
 package com.neo.sk.map.frontend
 
+import com.neo.sk.map.frontend.map.Home
 import org.scalajs.dom
 import org.scalajs.dom.html.Heading
 
@@ -61,6 +62,10 @@ object Hub extends js.JSApp {
           case "helloPage" => HelloPage.render()
           case "hiPage" => HiPage.render()
           case x => todo(s"counter match error: ${paths.mkString("/")}")
+        }
+        case "map" => paths(1) match {
+          case "home" => Home.render()
+          case x => todo(s"map match error: ${paths.mkString("/")}")
         }
         case "admin" => paths(1) match {
           case "home" => todo(paths(1))

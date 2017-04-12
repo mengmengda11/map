@@ -31,6 +31,10 @@ package object ptcl {
     msg: String = "ok"
   ) extends Response
 
+  //map
+  case class Text(text:String,name:String)
+  case class TextRsp(errCode:Int, msg:String, data:Int)
+
 
 
 
