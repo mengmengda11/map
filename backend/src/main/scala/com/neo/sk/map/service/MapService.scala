@@ -24,16 +24,23 @@ trait MapService extends AuthService{
           log.info(s"get question update data: $info")
           val INF=Integer.MAX_VALUE
           log.debug("1")
-          val Nodes=Array('0','1','2','3')
+          val Nodes=Array('0','1','2','3','4','5')
           log.debug("2")
-          val matrix=Array(Array(0,1,2,1),Array(INF,0,INF,INF),Array(INF,3,0,1),Array(INF,1,1,0))
+          val matrix=Array(
+            Array(0,6,3,INF,INF,INF),
+            Array(6,0,2,5,INF,INF),
+            Array(3,2,0,3,4,INF),
+            Array(INF,5,3,0,2,3),
+            Array(INF,INF,4,2,0,5),
+            Array(INF,INF,INF,3,5,0)
+          )
           log.debug("3")
           val dist:Array[Int]=Array[Int](Nodes.length)
           log.debug("4")
           val dijkstra=new Dijkstra(Nodes,matrix)
           log.debug("5")
-          dijkstra.dijkstra(2,1)
-          val num=dijkstra.dijkstra(2,1)
+          dijkstra.dijkstra(0,1)
+          val num=dijkstra.dijkstra(0,1)
           log.debug("6")
           log.debug(num+"")
           complete(TextRsp(0,"ok",num))

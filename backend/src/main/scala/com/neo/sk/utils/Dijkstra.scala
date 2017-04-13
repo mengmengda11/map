@@ -25,16 +25,14 @@ class Dijkstra(Nodex:Array[Char],Matrixx:Array[Array[Int]]){
 
     //初始化
 
+    for(a<- 0 to Nodes.length-1){
+      way(a)=0
+    }
     for(a<-0 to Nodes.length-1){
        flag(a)=false
       log.debug("flag"+a+flag(a))
       distancex(a)=Matrix(node)(a)
-      if(distancex(a)==INF)(
-        way(a)=0
-        )else{
-        way(a)=node//起始点
-      }
-      log.debug("distancex"+distancex(a)+"*"+Matrix(node)(a))
+     // log.debug("distancex"+distancex(a)+"*"+Matrix(node)(a))
     }
 
     //对顶点node本身进行初始化
@@ -49,14 +47,13 @@ class Dijkstra(Nodex:Array[Char],Matrixx:Array[Array[Int]]){
       var min=INF
 
       //寻找最短路径
-      var u=node
       for(j<-0 to Nodes.length-1){
         if(flag(j)==false&&distancex(j)<min){
           k=j
           min=distancex(j)
-          u=j//得到最短路径终点
         }
       }
+
       flag(k)=true
 
       //更新Matrix点值
@@ -70,35 +67,33 @@ class Dijkstra(Nodex:Array[Char],Matrixx:Array[Array[Int]]){
         }
         if(flag(j)==false&&len<distancex(j)){
           distancex(j)=len
-          way(j)=u//最短路径上的一个点
+          way(j)=k
+          log.debug("is way"+k)
         }
       }
 
     }
 
-    log.debug("dijkstra"+Nodes(node))
+
 //    for(i<-0 to Nodes.length-1){
 //      log.debug("shortest"+Nodes(node)+"*"+Nodes(i)+"*"+distancex(i))
 //    }
 
-    //得到最短路径
 
-    var w=end
-    var q=0
-      while (w!=node){
-        q+=1
-        wayend(q)=way(w)
-        w=way(w)
+
+
+
+//输出最短路径
+      var j=end
+      while (way(j)!=0){
+        log.debug("endway"+way(j))
+        j=way(j)
       }
 
-     way.map{
-       a=>log.debug("way"+way(a))
-     }
 
     log.debug("shortest"+Nodes(node)+"*"+Nodes(end)+"*"+distancex(end))
     //最短路径的值
     distancex(end)
-
 
 
 
