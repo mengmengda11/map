@@ -2,11 +2,15 @@ package com.neo.sk.utils
 
 import javax.xml.soap.Node
 
+import org.slf4j.LoggerFactory
+
 
 /**
   * Created by zm on 2017/4/13.
   */
 class NodeX(xx:Int,yx:Int,parentNodex:NodeX) {
+  private val log = LoggerFactory.getLogger(this.getClass)
+  log.debug("new NodeX")
   var x:Int=xx//x坐标
   var y:Int=yx//y坐标
   var parentNode:NodeX=parentNodex  //父类节点
