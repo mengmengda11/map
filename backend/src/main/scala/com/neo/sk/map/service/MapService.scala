@@ -123,9 +123,21 @@ trait MapService extends AuthService{
               Array(0,0,0,0,0,0,0,0,0),
               Array(0,0,0,0,0,0,0,0,0)
             )
+
+//            val NODES=Array(
+//              Array(0,0,0,0,0,0,0,0,0),
+//              Array(0,@,0,0,0,0,0,0,0),
+//              Array(0,@,0,0,0,0,0,0,0),
+//              Array(0,@,0,1,0,0,0,0,0),
+//              Array(0,@,0,1,0,0,0,0,0),
+//              Array(0,@,0,1,0,0,0,0,0),
+//              Array(0,0,0,1,0,0,0,0,0),
+//              Array(0,0,0,0,0,0,0,0,0),
+//              Array(0,0,0,0,0,0,0,0,0)
+//            )
             log.debug("1")
-            val startNode=new NodeY(5,1)
-            val endNode=new NodeY(5,5)
+            val startNode=new NodeY(1,1)
+            val endNode=new NodeY(1,5)
             log.debug("2")
             var parent=new AStarNew().findPath(startNode,endNode)
             log.debug("3*********")

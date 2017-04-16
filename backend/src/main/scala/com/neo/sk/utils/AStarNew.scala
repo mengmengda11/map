@@ -75,7 +75,7 @@ class AStarNew {
 
   def canReach(x:Int,y:Int): Boolean ={
     log.debug("canReach")
-    if(x>0&&x<NODES.length&&y>0&&y<NODES(0).length){
+    if(x>=0&&x<NODES.length&&y>=0&&y<NODES(0).length){
       return NODES(x)(y)==0
     }
     return false
