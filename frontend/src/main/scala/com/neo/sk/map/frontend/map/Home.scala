@@ -41,8 +41,19 @@ object Home extends Component[Div]{
   var starty:Int=0
   var endx:Int=0
   var endy:Int=0
-  dom.document.onclick={e: MouseEvent =>
+  dom.window.onmousedown={e: MouseEvent =>
     println("onclick"+e.clientX+"y"+e.clientY)
+    if(startx==0&&starty==0){
+      startx=e.screenX.toInt
+      starty=e.screenY.toInt
+    }else{
+      endx=e.screenX.toInt
+      endy=e.screenX.toInt
+    }
+  }
+  val x=dom.svg
+  dom.window.onmousedown={e: MouseEvent =>
+    println("onmousedown"+e.clientX+"y"+e.clientY)
     if(startx==0&&starty==0){
       startx=e.clientX.toInt
       starty=e.clientY.toInt
@@ -51,16 +62,24 @@ object Home extends Component[Div]{
       endy=e.clientY.toInt
     }
   }
-  dom.window.event.
+
+  def setSvgAttribute(evt:MouseEvent)={
+    val xx=evt.clientX
+    val yy=evt.clientY
+    println("xx"+xx+"yy"+yy)
+  }
 
   dom.window.setTimeout(()=>{
     xlength=dom.document.getElementById("svg").scrollWidth
     ylength=dom.document.getElementById("svg").scrollHeight
     val paths = dom.document.getElementById("svg").asInstanceOf[IFrame].contentDocument.getElementById("path")
+    val background = dom.document.getElementById("svg").asInstanceOf[IFrame].contentDocument.getElementById("background").asInstanceOf[SVG]
+    background.setAttribute("click","setSvgAttribute(evt)")
     x1 = paths.getAttribute("x").toInt
     y1=paths.getAttribute("y").toInt
      width=paths.getAttribute("width").toInt
      height=paths.getAttribute("height").toInt
+    println("background"+background)
     println("x1="+x1+"+y1="+y1+"xlength="+xlength++"ylength="+ylength+"width="+width++"height="+height)
   },2000)
 
