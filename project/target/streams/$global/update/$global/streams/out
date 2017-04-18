@@ -1,4 +1,4 @@
-[0m[[0minfo[0m] [0mUpdating {file:/D:/yingyong3/projects/map/project/}map-build...[0m
+[0m[[0minfo[0m] [0mUpdating {file:/D:/mm/map/project/}map-build...[0m
 [0m[[0mdebug[0m] [0m:: resolving dependencies :: default#map-build;0.1-SNAPSHOT[0m
 [0m[[0mdebug[0m] [0m	confs: [compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom, scala-tool][0m
 [0m[[0mdebug[0m] [0m	validate = true[0m
@@ -13296,19 +13296,19 @@
 [0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.scala-sbt#template-resolver;0.1!template-resolver.jar[0m
 [0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.scala-lang#jline;2.10.6!jline.jar[0m
 [0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.fusesource.jansi#jansi;1.4!jansi.jar[0m
-[0m[[0mdebug[0m] [0m:: resolution report :: resolve 7986ms :: artifacts dl 217ms[0m
-[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT compile produced in D:\yingyong3\projects\map\project\target\resolution-cache\reports\default-map-build-compile.xml[0m
-[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT runtime produced in D:\yingyong3\projects\map\project\target\resolution-cache\reports\default-map-build-runtime.xml[0m
-[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT test produced in D:\yingyong3\projects\map\project\target\resolution-cache\reports\default-map-build-test.xml[0m
-[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT provided produced in D:\yingyong3\projects\map\project\target\resolution-cache\reports\default-map-build-provided.xml[0m
-[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT optional produced in D:\yingyong3\projects\map\project\target\resolution-cache\reports\default-map-build-optional.xml[0m
-[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT compile-internal produced in D:\yingyong3\projects\map\project\target\resolution-cache\reports\default-map-build-compile-internal.xml[0m
-[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT runtime-internal produced in D:\yingyong3\projects\map\project\target\resolution-cache\reports\default-map-build-runtime-internal.xml[0m
-[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT test-internal produced in D:\yingyong3\projects\map\project\target\resolution-cache\reports\default-map-build-test-internal.xml[0m
-[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT plugin produced in D:\yingyong3\projects\map\project\target\resolution-cache\reports\default-map-build-plugin.xml[0m
-[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT sources produced in D:\yingyong3\projects\map\project\target\resolution-cache\reports\default-map-build-sources.xml[0m
-[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT docs produced in D:\yingyong3\projects\map\project\target\resolution-cache\reports\default-map-build-docs.xml[0m
-[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT pom produced in D:\yingyong3\projects\map\project\target\resolution-cache\reports\default-map-build-pom.xml[0m
-[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT scala-tool produced in D:\yingyong3\projects\map\project\target\resolution-cache\reports\default-map-build-scala-tool.xml[0m
-[0m[[0mdebug[0m] [0m	resolve done (7986ms resolve - 217ms download)[0m
+[0m[[0mdebug[0m] [0m:: resolution report :: resolve 5055ms :: artifacts dl 502ms[0m
+[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT compile produced in D:\mm\map\project\target\resolution-cache\reports\default-map-build-compile.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT runtime produced in D:\mm\map\project\target\resolution-cache\reports\default-map-build-runtime.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT test produced in D:\mm\map\project\target\resolution-cache\reports\default-map-build-test.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT provided produced in D:\mm\map\project\target\resolution-cache\reports\default-map-build-provided.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT optional produced in D:\mm\map\project\target\resolution-cache\reports\default-map-build-optional.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT compile-internal produced in D:\mm\map\project\target\resolution-cache\reports\default-map-build-compile-internal.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT runtime-internal produced in D:\mm\map\project\target\resolution-cache\reports\default-map-build-runtime-internal.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT test-internal produced in D:\mm\map\project\target\resolution-cache\reports\default-map-build-test-internal.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT plugin produced in D:\mm\map\project\target\resolution-cache\reports\default-map-build-plugin.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT sources produced in D:\mm\map\project\target\resolution-cache\reports\default-map-build-sources.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT docs produced in D:\mm\map\project\target\resolution-cache\reports\default-map-build-docs.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT pom produced in D:\mm\map\project\target\resolution-cache\reports\default-map-build-pom.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#map-build;0.1-SNAPSHOT scala-tool produced in D:\mm\map\project\target\resolution-cache\reports\default-map-build-scala-tool.xml[0m
+[0m[[0mdebug[0m] [0m	resolve done (5055ms resolve - 502ms download)[0m
 [0m[[0minfo[0m] [0mDone updating.[0m

@@ -32,8 +32,21 @@ package object ptcl {
   ) extends Response
 
   //map
-  case class Text(text:String,name:String)
+  case class Text(
+                   xlength:Int,
+                   ylength:Int,
+                   x:Int,
+                   y:Int,
+                   width:Int,
+                   height:Int,
+                   startx:Int,
+                   starty:Int,
+                   endx:Int,
+                   endy:Int
+                 )
   case class TextRsp(errCode:Int, msg:String, data:Int)
+
+
 
 
 

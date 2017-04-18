@@ -94,7 +94,7 @@ object MySlickCodeGenerator {
 
 
 
-  def main1(args: Array[String]) {
+  def main(args: Array[String]) {
     //genDefaultTables()
     val dbDriver = PostgresDriver
 

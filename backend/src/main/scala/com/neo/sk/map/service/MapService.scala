@@ -7,6 +7,7 @@ import com.neo.sk.utils._
 import akka.http.scaladsl.server.Directives._
 import io.circe.Error
 import org.slf4j.LoggerFactory
+import Array._
 
 import scala.collection.mutable.ListBuffer
 
@@ -105,69 +106,66 @@ trait MapService extends AuthService{
     return false
   }
 
+  def toArray(ylength:Int,xlength:Int,y:Int,x:Int,height:Int,width:Int): Array[Array[Int]]={
+    var startArray=ofDim[Int](xlength,ylength)
+
+    for(i<-0 to xlength-1){
+      for(j<- 0 to ylength-1){
+        startArray(i)(j)=0
+      }
+    }
+
+    log.debug("x="+x+"width-1="+(width-1))
+    log.debug("y="+y+"height-1="+(height-1))
+    for(a<- x to x+width-1){
+      for(b<- y to y+height-1){
+        startArray(a)(b)=1
+      }
+    }
+
+
+    return startArray
+
+  }
+
 
 
   private val text=(path("text") & post & pathEndOrSingleSlash){
         entity(as[Either[Error,Text]]){
           case Right(info) =>
             log.info(s"get question update data: $info")
-
-            val NODES=Array(
-              Array(0,0,0,0,0,0,0,0,0),
-              Array(0,0,0,0,0,0,0,0,0),
-              Array(0,0,0,0,0,0,0,0,0),
-              Array(0,0,0,1,0,0,0,0,0),
-              Array(0,0,0,1,0,0,0,0,0),
-              Array(0,0,0,1,0,0,0,0,0),
-              Array(0,0,0,1,0,0,0,0,0),
-              Array(0,0,0,0,0,0,0,0,0),
-              Array(0,0,0,0,0,0,0,0,0)
-            )
-
-//            val NODES=Array(
-//              Array(0,0,0,0,0,0,0,0,0),
-//              Array(0,@,0,0,0,0,0,0,0),
-//              Array(0,@,0,0,0,0,0,0,0),
-//              Array(0,@,0,1,0,0,0,0,0),
-//              Array(0,@,0,1,0,0,0,0,0),
-//              Array(0,@,0,1,0,0,0,0,0),
-//              Array(0,0,0,1,0,0,0,0,0),
-//              Array(0,0,0,0,0,0,0,0,0),
-//              Array(0,0,0,0,0,0,0,0,0)
-//            )
-            log.debug("1")
-            val startNode=new NodeY(1,1)
-            val endNode=new NodeY(1,5)
-            log.debug("2")
-            var parent=new AStarNew().findPath(startNode,endNode)
-            log.debug("3*********")
-//            for(i<- 0 to NODES.length-1){
-//              for(j<- 0 to NODES(0).length-1){
-//                log.debug(NODES(i)(j)+",")
+//            val nodeArr=Array(Array(0, 0, 0, 0, 0, 0, 0, 0, 0),
+//                  Array(0, 0, 0, 0, 0, 0, 0, 0, 0),
+//                  Array(0, 0, 0, 0, 0, 0, 0, 0, 0),
+//                  Array(0, 0, 0, 1, 0, 0, 0, 0, 0),
+//                  Array(0, 0, 0, 1, 0, 0, 0, 0, 0),
+//                  Array(0, 0, 0, 1, 0, 0, 0, 0, 0),
+//                  Array(0, 0, 0, 1, 0, 0, 0, 0, 0),
+//                  Array(0, 0, 0, 0, 0, 0, 0, 0, 0),
+//                  Array(0, 0, 0, 0, 0, 0, 0, 0, 0))
+//            val startNode: NewAstar.Node = new NewAstar.Node(5, 1)
+//            val endNode: NewAstar.Node = new NewAstar.Node(5, 5)
+//
+//            val endArray=NewAstar.main(nodeArr,startNode,endNode)
+//
+//            log.debug(s"***********")
+//            for(i<- 0 to endArray.length-1){
+//              for(j<- 0 to endArray(0).length-1){
+//                System.out.print(endArray(i)(j) + ", ")
 //              }
-//              log.debug("")
+//              System.out.println
 //            }
 
-            log.debug("4**********")
-            val arrayList=new ListBuffer[NodeY]
-            while (parent!=null){
-              arrayList.append(new NodeY(parent.x,parent.y))
-              parent=parent.parent
-            }
-            log.debug("\n")
-            log.debug("5***********")
-
-            for(i<- 0 to NODES.length-1){
-              for(j<- 0 to NODES(0).length-1){
-
-                if(exists(arrayList,i,j)){
-                  log.debug("@,")
-                }else{
-                  log.debug(NODES(i)(j)+",")
-                }
-              }
-              log.debug("")
-            }
+            val endArray=toArray(info.xlength/10,info.ylength/10,info.x/10,info.y/10,info.width/10,info.height/10)
+            val startNode: NewAstar.Node = new NewAstar.Node(info.startx,info.starty)
+            val endNode: NewAstar.Node = new NewAstar.Node(info.endx,info.endy)
+            val endend=NewAstar.main(endArray,startNode,endNode)
+//            for(i<- 0 to endArray.length-1){
+//              for(j<- 0 to endArray(0).length-1){
+//                System.out.print(endArray(i)(j) + ", ")
+//              }
+//              System.out.println
+//            }
 
             complete(TextRsp(0,"ok",1))
           case Left(e) =>
