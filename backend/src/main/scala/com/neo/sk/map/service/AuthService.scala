@@ -1,62 +1,92 @@
 package com.neo.sk.map.service
 
+import akka.actor.{ActorRef, ActorSystem}
 import akka.http.scaladsl.model.StatusCodes
+import akka.http.scaladsl.server.{Directive, RequestContext}
+import akka.http.scaladsl.server
+import com.neo.sk.utils.SessionSupport
+import com.neo.sk.map.common.AppSettings
+import com.neo.sk.map.models.dao._
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server._
-import com.neo.sk.map.service.BaseService
-import com.neo.sk.utils.{CirceSupport, SessionSupport}
+import akka.stream.Materializer
+import akka.util.Timeout
+import com.neo.sk.map.models._
+import com.neo.sk.map.ptcl
+import com.neo.sk.map.service.SessionBase.UserSession
 import org.slf4j.LoggerFactory
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.util.{Failure, Success}
 
 /**
-  * Created by zm on 2017/4/12.
+  * Created by mengmengda on 2017/2/9.
   */
-trait AuthService extends BaseService with SessionSupport with CirceSupport{
+trait AuthService extends BaseService with SessionBase{
+  import com.neo.sk.map.ptcl
+  import io.circe.generic.auto._
 
-  private[this] val log = LoggerFactory.getLogger(this.getClass)
-  private[this] val sessionTimeOut = 24l * 60 * 60 * 1000
-  private[this] val userSessionTimeOut = 24l * 60 * 60 * 1000
+  private val log = LoggerFactory.getLogger("com.neo.sk.hw1701a.http.AuthService")
 
-  object SessionKey{
-    val accountType = "account_type"
-    val accountId = "account_id"
-    val account = "account"
-    val timestamp = "time_stamp"
+  private val sessionTimeOut = 24 * 60 * 60 * 1000
 
-    val headImg = "head_img"
-    val nickName = "nick_name"
+
+  object SessionKey {
+    val userId = "uid"
+    val name = "username"
+    val timestamp = "loginTime"
   }
 
-  object UserSessionKey{
-    //    val userType = "user_type"
-    val userState = "user_state"
-    val userSessionId = "user_session_id"
-    val userServiceId = "user_service_id"
-    val userTimestamp = "user_time_stamp"
-    val userRandomMark = "user_random_mark"
-    val userRemoteIp = "user_remote_ip"
-  }
 
-  def loggingAction: Directive[Tuple1[RequestContext]] = extractRequestContext.map{ ctx =>
-    log.info(s"Access uri ${ctx.request.uri} from ip ${ctx.request.uri.authority.host.address()}.")
+  def loggingAction: Directive[Tuple1[RequestContext]] = extractRequestContext.map { ctx =>
+    log.info(s"Access uri: ${ctx.request.uri} from ip ${ctx.request.uri.authority.host.address}.")
     ctx
   }
 
-  def dealFutureResult(f: => Future[Route]) = onComplete(f){
-    case Success(route) => route
-    //    case Failure(x: DeserializationException) =>
-    //      reject(ValidationRejection(x.getMessage, Some(x)))
+
+  def dealFutureResult(future: ⇒ Future[server.Route]) = onComplete(future) {
+    case Success(route) =>
+      route
     case Failure(e) =>
       e.printStackTrace()
-      log.warn(s"internal error: ${e.getMessage}")
-      complete("internalErr")
+      log.warn("internal error: {}", e.getMessage)
+      complete(ptcl.CommonRsp(100000, "Internal error."))
   }
 
+  def CompanyAction(f: Company => server.Route) = loggingAction { ctx =>
+    val companyUrl = "/hw1701a/company/login"
+    optionalSession{
+      case Right(session) =>
+        try{
+          val uId = session(SessionKey.userId).toLong
+          val name = session(SessionKey.name)
+          val timestamp = session(SessionKey.timestamp).toLong
+          log.debug("",uId,name)
+          if(System.currentTimeMillis() - timestamp > sessionTimeOut) {
+            log.info("Login failed fot TimeOut.")
+            redirect(companyUrl, StatusCodes.SeeOther)
+          }
+          else {
+            dealFutureResult {
+              CompanyDao.isCompanyExists(uId.toInt).map {
+                case true =>
+                  f(Company(uId, name, timestamp))
 
+                case false =>
+                  redirect(companyUrl, StatusCodes.SeeOther)
+              }
+            }
+          }
+        }catch {
+          case ex: Exception =>
+            log.info(s"Not Login Yet, ex: $ex")
+            redirect(companyUrl, StatusCodes.SeeOther)
+        }
 
-
+      case _ =>
+        log.debug("no session...")
+        redirect(companyUrl, StatusCodes.SeeOther)
+    }
+  }
 
 
 }

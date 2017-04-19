@@ -21,16 +21,19 @@ object SessionBase {
     val SESSION_TYPE = "userSession"
     val uid = "uid"
     val loginTime = "loginTime"
+    val username="username"
   }
 
   case class UserSession(
-    uid: Long,
-    loginTime: Long
-  ) {
+                          uid: Long,
+                          loginTime: Long,
+                          username:String
+                        ) {
     def toSessionMap = Map(
       SessionTypeKey -> UserSessionKey.SESSION_TYPE,
       UserSessionKey.uid -> uid.toString,
-      UserSessionKey.loginTime -> loginTime.toString
+      UserSessionKey.loginTime -> loginTime.toString ,
+      UserSessionKey.username -> username
     )
   }
 
@@ -41,7 +44,8 @@ object SessionBase {
         if (sessionMap.get(SessionTypeKey).exists(_.equals(UserSessionKey.SESSION_TYPE))) {
           Some(UserSession(
             sessionMap(UserSessionKey.uid).toLong,
-            sessionMap(UserSessionKey.loginTime).toLong
+            sessionMap(UserSessionKey.loginTime).toLong,
+            sessionMap(UserSessionKey.username)
           ))
         } else {
           logger.debug("no session type in the session")

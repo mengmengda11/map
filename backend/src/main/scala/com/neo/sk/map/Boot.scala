@@ -11,6 +11,21 @@ import com.neo.sk.map.service.HttpService
 import scala.language.postfixOps
 import scala.util.{Failure, Success}
 
+
+
+
+import akka.actor.ActorSystem
+import akka.dispatch.MessageDispatcher
+import akka.event.{Logging, LoggingAdapter}
+import akka.http.scaladsl.Http
+import akka.stream.ActorMaterializer
+import akka.util.Timeout
+import com.neo.sk.map.core._
+import com.neo.sk.map.service.HttpService
+
+import scala.language.postfixOps
+import scala.util.{Failure, Success}
+
 /**
   * User: Taoz
   * Date: 11/16/2016
@@ -34,6 +49,12 @@ object Boot extends HttpService {
 
   val log: LoggingAdapter = Logging(system, getClass)
 
+  override val companyActor = system.actorOf(CompanyActor.props)
+
+
+
+
+
 
 
   def main(args: Array[String]) {
@@ -53,3 +74,4 @@ object Boot extends HttpService {
 
 
 }
+

@@ -42,7 +42,7 @@ trait TestService extends ServiceUtils with SessionBase with HttpUtil {
 
     (path("set") & get) {
       val uid = 1234567l
-      val userSession = UserSession(uid, System.currentTimeMillis())
+      val userSession = UserSession(uid, System.currentTimeMillis(),"")
       setUserSession(userSession) {
         complete(s"user session set: $userSession")
       }

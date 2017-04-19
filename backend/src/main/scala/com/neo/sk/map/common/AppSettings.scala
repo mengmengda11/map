@@ -41,7 +41,7 @@ object AppSettings {
   val serverProtocol = appConfig.getString("server.protocol")
   val serverHost = appConfig.getString("server.host")
 
-
+ // val dataPath = appConfig.getString("dataPath")
   val slickConfig = config.getConfig("slick.db")
   val slickUrl = slickConfig.getString("url")
   val slickUser = slickConfig.getString("user")

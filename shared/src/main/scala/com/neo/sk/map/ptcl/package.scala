@@ -46,6 +46,11 @@ package object ptcl {
   case class PathInfo(x:Int,y:Int,width:Int,height:Int)
 
 
+  //company
+
+  case class CompanyConfirm(email: String, psw: String) extends Request
+
+
 
 
 

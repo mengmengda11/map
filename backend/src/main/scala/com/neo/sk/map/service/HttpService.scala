@@ -20,13 +20,13 @@ trait HttpService extends ResourceService
                           with CounterService {
 
 
-  implicit val system: ActorSystem
-
-  implicit val executor: ExecutionContextExecutor
-
-  implicit val materializer: Materializer
-
-  implicit val timeout: Timeout
+//  implicit val system: ActorSystem
+//
+//  implicit val executor: ExecutionContextExecutor
+//
+//  implicit val materializer: Materializer
+//
+//  implicit val timeout: Timeout
 
 
   val routes: Route =
