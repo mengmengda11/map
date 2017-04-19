@@ -35,10 +35,7 @@ package object ptcl {
   case class Text(
                    xlength:Int,
                    ylength:Int,
-                   x:Int,
-                   y:Int,
-                   width:Int,
-                   height:Int,
+                   path:List[PathInfo],
                    startx:Int,
                    starty:Int,
                    endx:Int,
@@ -46,6 +43,7 @@ package object ptcl {
                  )
   case class TextRsp(errCode:Int, msg:String, data:List[Info])
   case class Info(x:Int, y:Int)
+  case class PathInfo(x:Int,y:Int,width:Int,height:Int)
 
 
 

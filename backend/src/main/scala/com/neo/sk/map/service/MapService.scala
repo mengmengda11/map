@@ -20,110 +20,31 @@ trait MapService extends AuthService{
   import io.circe._
   private val log = LoggerFactory.getLogger(this.getClass)
 
-//  private val text=(path("text") & post & pathEndOrSingleSlash){
-//      entity(as[Either[Error,Text]]){
-//        case Right(info) =>
-//          log.info(s"get question update data: $info")
-//          val INF=Integer.MAX_VALUE
-//          log.debug("1")
-//          val Nodes=Array('0','1','2','3','4','5')
-//          log.debug("2")
-//          val matrix=Array(
-//            Array(0,6,3,INF,INF,INF),
-//            Array(6,0,2,5,INF,INF),
-//            Array(3,2,0,3,4,INF),
-//            Array(INF,5,3,0,2,3),
-//            Array(INF,INF,4,2,0,5),
-//            Array(INF,INF,INF,3,5,0)
-//          )
-//          log.debug("3")
-//          val dist:Array[Int]=Array[Int](Nodes.length)
-//          log.debug("4")
-//          val dijkstra=new Dijkstra(Nodes,matrix)
-//          log.debug("5")
-//          dijkstra.dijkstra(0,1)
-//          val num=dijkstra.dijkstra(0,1)
-//          log.debug("6")
-//          log.debug(num+"")
-//          complete(TextRsp(0,"ok",num))
-//        case Left(e) =>
-//          complete("error")
-//      }
-//
-//  }
 
-//
-//  private val text=(path("text") & post & pathEndOrSingleSlash){
-//    entity(as[Either[Error,Text]]){
-//      case Right(info) =>
-//        log.info(s"get question update data: $info")
-//
-//        log.debug("1")
-//        val map=Array(
-//          Array(1,1,1,1,0,1,1,1,1,1),
-//          Array(1,1,1,1,0,1,1,1,1,1),
-//          Array(1,1,1,1,0,1,1,0,0,1),
-//          Array(1,1,1,1,0,1,0,0,0,1),
-//          Array(1,1,1,1,0,1,1,0,0,0),
-//          Array(1,1,1,1,1,1,1,1,1,1)
-//        )
-//        log.debug("2")
-//        val aStar=new AStar(map,6,10)
-//        log.debug("3")
-//        val flag=aStar.search(4,0,3,9)
-//        log.debug("flag"+flag)
-//       if(flag==(-1)){
-//         log.debug("传输数据有误")
-//       }else if(flag==0){
-//         log.debug("没有找到")
-//       }else{
-//         for(x<- 0 to 6-1){
-//           for(y<- 0 to 10-1){
-//             if(map(x)(y)==1){
-//               log.debug(" ")
-//             }else if(map(x)(y)==0){
-//               log.debug("=")
-//             }else if(map(x)(y)==(-1)){
-//               log.debug("*")
-//             }
-//           }
-//           log.debug("")
-//         }
-//       }
-//        complete(TextRsp(0,"ok",1))
-//      case Left(e) =>
-//        complete("error")
-//    }
-//
-//  }
 
-  def exists(nodes:ListBuffer[NodeY],x:Int,y:Int):Boolean={
-    for(i<- 0 to nodes.length-1){
-      if(nodes(i).x==x&&nodes(i).y==y){
-        return  true
-      }
-    }
-    return false
+  def exists(endArray:Array[Array[Int]],startx:Int,starty:Int,endx:Int,endy:Int):Boolean={
+   if(endArray(startx)(starty)==1||endArray(endx)(endy)==1){
+     return false
+   }
+    return true
   }
 
-  def toArray(ylength:Int,xlength:Int,y:Int,x:Int,height:Int,width:Int): Array[Array[Int]]={
-    var startArray=ofDim[Int](xlength,ylength)
 
+  def toArray(ylength:Int,xlength:Int,pathList:List[PathInfo]):Array[Array[Int]]={
+    var startArray=ofDim[Int](xlength,ylength)
+    //初始化(1为障碍物，0为道路)
     for(i<-0 to xlength-1){
       for(j<- 0 to ylength-1){
-        startArray(i)(j)=0
+        startArray(i)(j)=1
       }
     }
-
-    log.debug("x="+x+"width-1="+(width-1))
-    log.debug("y="+y+"height-1="+(height-1))
-
-    for(a<- x to x+width-1){
-      for(b<- y to y+height-1){
-        startArray(a)(b)=1
+    for(k<- 0 to pathList.length-1){
+      for(a<-pathList(k).x/10 to pathList(k).x/10+pathList(k).width/10-1){
+        for(b<- pathList(k).y/10 to pathList(k).y/10+pathList(k).height/10-1){
+          startArray(a)(b)=0
+        }
       }
     }
-
 
     return startArray
 
@@ -131,35 +52,24 @@ trait MapService extends AuthService{
 
 
 
+
   private val text=(path("text") & post & pathEndOrSingleSlash){
         entity(as[Either[Error,Text]]){
           case Right(info) =>
             log.info(s"get question update data: $info")
-//            val nodeArr=Array(Array(0, 0, 0, 0, 0, 0, 0, 0, 0),
-//                  Array(0, 0, 0, 0, 0, 0, 0, 0, 0),
-//                  Array(0, 0, 0, 0, 0, 0, 0, 0, 0),
-//                  Array(0, 0, 0, 1, 0, 0, 0, 0, 0),
-//                  Array(0, 0, 0, 1, 0, 0, 0, 0, 0),
-//                  Array(0, 0, 0, 1, 0, 0, 0, 0, 0),
-//                  Array(0, 0, 0, 1, 0, 0, 0, 0, 0),
-//                  Array(0, 0, 0, 0, 0, 0, 0, 0, 0),
-//                  Array(0, 0, 0, 0, 0, 0, 0, 0, 0))
-//            val startNode: NewAstar.Node = new NewAstar.Node(5, 1)
-//            val endNode: NewAstar.Node = new NewAstar.Node(5, 5)
-//
-//            val endArray=NewAstar.main(nodeArr,startNode,endNode)
-//
-//            log.debug(s"***********")
-//            for(i<- 0 to endArray.length-1){
-//              for(j<- 0 to endArray(0).length-1){
-//                System.out.print(endArray(i)(j) + ", ")
-//              }
-//              System.out.println
-//            }
+            val startx=info.starty/10.toInt
+            val starty=info.startx/10.toInt
+            val endx=info.endy/10.toInt
+            val endy=info.endx/10.toInt
 
-            val endArray=toArray(info.xlength/10,info.ylength/10,info.x/10,info.y/10,info.width/10,info.height/10)
-            val startNode: NewAstar.Node = new NewAstar.Node(info.starty/10.toInt,info.startx/10.toInt)
-            val endNode: NewAstar.Node = new NewAstar.Node(info.endy/10.toInt,info.endx/10.toInt)
+
+            val endArray=toArray(info.xlength/10,info.ylength/10,info.path)
+            val startNode: NewAstar.Node = new NewAstar.Node(startx,starty)
+            val endNode: NewAstar.Node = new NewAstar.Node(endx,endy)
+            if(exists(endArray,startx,starty,endx,endy)==false){
+              complete(CommonRsp(1001001, "please select correct start and end point"))
+            }
+
             val endend=NewAstar.main(endArray,startNode,endNode)
             val xyList:ListBuffer[Info]=new ListBuffer[Info]
             for(i<-0 to info.ylength/10-1){
@@ -186,7 +96,7 @@ trait MapService extends AuthService{
 
   val mapRoutes = pathPrefix("map") {
     log.debug("start***")
-    (path("home")  & get) {
+    (path("home")|path("path")  & get) {
       getFromResource("html/map.html")
     }~text
   }

@@ -20,6 +20,7 @@ object Routes {
   object MapRoute{
     val mapRoot = baseUrl + "/map"
     val home = mapRoot + "/home"
+    val path=mapRoot+"/path"
     val text=mapRoot+"/text"
   }
 

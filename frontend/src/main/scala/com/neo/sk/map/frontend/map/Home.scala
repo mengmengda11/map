@@ -86,7 +86,7 @@ object Home extends Component[Div]{
 
 
   changeNameButton.onclick = { e: MouseEvent =>
-    val bodyStr=Text(xlength,ylength,x1,y1,width,height,startx,starty,endx,endy).asJson.noSpaces
+    val bodyStr=Text(xlength,ylength,List(PathInfo(x1,y1,width,height)),startx,starty,endx,endy).asJson.noSpaces
     Http.postJsonAndParse[TextRsp](textUrl,bodyStr).foreach{
       case Right(rsp)=>
         rsp.errCode match{
