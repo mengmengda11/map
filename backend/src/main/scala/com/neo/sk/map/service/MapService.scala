@@ -117,6 +117,7 @@ trait MapService extends AuthService{
 
     log.debug("x="+x+"width-1="+(width-1))
     log.debug("y="+y+"height-1="+(height-1))
+
     for(a<- x to x+width-1){
       for(b<- y to y+height-1){
         startArray(a)(b)=1
@@ -157,17 +158,22 @@ trait MapService extends AuthService{
 //            }
 
             val endArray=toArray(info.xlength/10,info.ylength/10,info.x/10,info.y/10,info.width/10,info.height/10)
-            val startNode: NewAstar.Node = new NewAstar.Node(info.startx,info.starty)
-            val endNode: NewAstar.Node = new NewAstar.Node(info.endx,info.endy)
+            val startNode: NewAstar.Node = new NewAstar.Node(info.starty/10.toInt,info.startx/10.toInt)
+            val endNode: NewAstar.Node = new NewAstar.Node(info.endy/10.toInt,info.endx/10.toInt)
             val endend=NewAstar.main(endArray,startNode,endNode)
-//            for(i<- 0 to endArray.length-1){
-//              for(j<- 0 to endArray(0).length-1){
-//                System.out.print(endArray(i)(j) + ", ")
-//              }
-//              System.out.println
-//            }
+            val xyList:ListBuffer[Info]=new ListBuffer[Info]
+            for(i<-0 to info.ylength/10-1){
+              for(j<- 0 to info.xlength/10-1){
+                if(endend(i)(j)==6){
+                 val a=Info(i,j)
+                  xyList.append(a)
+                }
+              }
+            }
+            log.debug("listlength="+xyList.length)
 
-            complete(TextRsp(0,"ok",1))
+
+            complete(TextRsp(0,"ok",xyList.toList))
           case Left(e) =>
             complete("error")
         }

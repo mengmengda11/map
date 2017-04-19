@@ -41,32 +41,16 @@ object Home extends Component[Div]{
   var starty:Int=0
   var endx:Int=0
   var endy:Int=0
-  dom.window.onmousedown={e: MouseEvent =>
-    println("onclick"+e.clientX+"y"+e.clientY)
-    if(startx==0&&starty==0){
-      startx=e.screenX.toInt
-      starty=e.screenY.toInt
-    }else{
-      endx=e.screenX.toInt
-      endy=e.screenX.toInt
-    }
-  }
-  val x=dom.svg
-  dom.window.onmousedown={e: MouseEvent =>
-    println("onmousedown"+e.clientX+"y"+e.clientY)
-    if(startx==0&&starty==0){
-      startx=e.clientX.toInt
-      starty=e.clientY.toInt
-    }else{
-      endx=e.clientX.toInt
-      endy=e.clientY.toInt
-    }
-  }
 
   def setSvgAttribute(evt:MouseEvent)={
-    val xx=evt.clientX
-    val yy=evt.clientY
-    println("xx"+xx+"yy"+yy)
+    if(startx==0&&starty==0){
+      startx=evt.clientX.toInt
+      starty=evt.clientY.toInt
+    }else{
+      endx=evt.clientX.toInt
+      endy=evt.clientY.toInt
+    }
+    println("startx="+startx+"starty"+starty+"endx"+endx+"endy"+endy)
   }
 
   dom.window.setTimeout(()=>{
@@ -74,7 +58,11 @@ object Home extends Component[Div]{
     ylength=dom.document.getElementById("svg").scrollHeight
     val paths = dom.document.getElementById("svg").asInstanceOf[IFrame].contentDocument.getElementById("path")
     val background = dom.document.getElementById("svg").asInstanceOf[IFrame].contentDocument.getElementById("background").asInstanceOf[SVG]
-    background.setAttribute("click","setSvgAttribute(evt)")
+    background.onclick = {
+      e:MouseEvent =>
+        setSvgAttribute(e)
+        e.preventDefault()
+    }
     x1 = paths.getAttribute("x").toInt
     y1=paths.getAttribute("y").toInt
      width=paths.getAttribute("width").toInt
@@ -82,6 +70,19 @@ object Home extends Component[Div]{
     println("background"+background)
     println("x1="+x1+"+y1="+y1+"xlength="+xlength++"ylength="+ylength+"width="+width++"height="+height)
   },2000)
+
+
+  def drawPath(data:List[Info])={
+   val length=data.length
+    for(a<- 0 to length-2){
+      val start=data(a)
+      val end=data(a+1)
+      //创建div
+      val top=start.x*10+86
+     val line=div(*.width:="10px",*.height:="10px",*.left:=s"${start.y*10}px",*.top:=s"${top}px",*.position.absolute,*.visibility.visible,*.backgroundColor:="#cdcdcd").render
+     document.body.appendChild(line)
+    }
+  }
 
 
   changeNameButton.onclick = { e: MouseEvent =>
@@ -92,6 +93,7 @@ object Home extends Component[Div]{
           case 0=>
             println("成功")
             JsFunc.alert(rsp.data.toString)
+            drawPath(rsp.data)
           case x=>
             println(s"失败$x")
             JsFunc.alert(s"失败$x")
@@ -106,10 +108,7 @@ object Home extends Component[Div]{
     div(
       title,
       svg,
-      content,
-      inputDom,
-      changeNameButton,
-      counter.render()
+      changeNameButton
     ).render
   }
 

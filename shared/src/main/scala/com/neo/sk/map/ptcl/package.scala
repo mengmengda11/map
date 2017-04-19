@@ -44,7 +44,9 @@ package object ptcl {
                    endx:Int,
                    endy:Int
                  )
-  case class TextRsp(errCode:Int, msg:String, data:Int)
+  case class TextRsp(errCode:Int, msg:String, data:List[Info])
+  case class Info(x:Int, y:Int)
+
 
 
 
