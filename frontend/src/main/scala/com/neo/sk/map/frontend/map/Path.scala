@@ -10,7 +10,7 @@ import org.scalajs.dom._
 import io.circe.generic.auto._
 import io.circe.syntax._
 import org.scalajs.dom
-import org.scalajs.dom.raw.{SVGElement, SVGRect}
+import org.scalajs.dom.raw.{SVGElement, SVGRect, SVGTextElement}
 import org.scalajs.dom.svg.SVG
 //import org.w3c.dom.Element
 
@@ -33,8 +33,10 @@ object Path extends Component[Div]{
 
   val counter = new Counter("hello", 10)
 
-  val svg = iframe(*.id:="svg")(*.src:="/hw1701a/static/img/map.svg",*.width:="100%",*.height:="600px").render
+  val svg = iframe(*.id:="svg")(*.src:="/hw1701a/static/img/newmap.svg",*.width:="100%",*.height:="600px").render
   val inputDom = input(*.placeholder := "counter name").render
+  val startBox=input(*.`type`:="text").render
+  val endBox=input(*.`type`:="text").render
   val changeNameButton = button("开始规划").render
   val restartButton = button("重新选择起始点").render
 
@@ -50,29 +52,75 @@ object Path extends Component[Div]{
     if(startx==0&&starty==0){
       startx=evt.clientX.toInt
       starty=evt.clientY.toInt
-      val startDom=div(*.width:="10px",*.height:="10px",*.left:=s"${startx}px",*.top:=s"${starty+86}px",*.position.absolute,*.visibility.visible,*.backgroundColor:="#ff0000").render
+      val startDom=div(*.width:="10px",*.height:="10px",*.left:=s"${startx}px",*.top:=s"${starty+72}px",*.position.absolute,*.visibility.visible,*.backgroundColor:="#ff0000").render
       startDiv.appendChild(startDom)
       document.body.appendChild(startDiv)
     }else if(endx==0&&endy==0){
       endx=evt.clientX.toInt
       endy=evt.clientY.toInt
-      val endDom=div(*.width:="10px",*.height:="10px",*.left:=s"${endx}px",*.top:=s"${endy+86}px",*.position.absolute,*.visibility.visible,*.backgroundColor:="#ff0000").render
+      val endDom=div(*.width:="10px",*.height:="10px",*.left:=s"${endx}px",*.top:=s"${endy+72}px",*.position.absolute,*.visibility.visible,*.backgroundColor:="#ff0000").render
       endDiv.appendChild(endDom)
       document.body.appendChild(endDiv)
     }
     println("startx="+startx+"starty"+starty+"endx"+endx+"endy"+endy)
   }
 
+  def setHouse(evt:MouseEvent)={
+    println("x="+evt.clientX+"y="+evt.clientY)
+    if(startx==0&&starty==0){
+      val househome=evt.target.asInstanceOf[dom.Element]
+      println("househome"+househome)
+      val housename=househome.getAttribute("name")
+      val doorx=househome.getAttribute("doorx")
+      val doory=househome.getAttribute("doory")
+      startBox.value=housename
+      startx=doorx.toInt
+      starty=doory.toInt
+      val startDom=img(*.width:="10px",*.height:="20px",*.left:=s"${evt.clientX}px",*.top:=s"${evt.clientY+72}px",*.position.absolute,*.visibility.visible,*.src:="/hw1701a/static/img/weizhi.jpg").render
+      startDiv.appendChild(startDom)
+      document.body.appendChild(startDiv)
+    }else if(endx==0&&endy==0){
+      val househome=evt.target.asInstanceOf[dom.Element]
+      val housename=househome.getAttribute("name")
+      val doorx=househome.getAttribute("doorx")
+      val doory=househome.getAttribute("doory")
+      endBox.value=housename
+      endx=doorx.toInt
+      endy=doory.toInt
+      val endDom=img(*.width:="10px",*.height:="20px",*.left:=s"${evt.clientX}px",*.top:=s"${evt.clientY+72}px",*.position.absolute,*.visibility.visible,*.src:="/hw1701a/static/img/weizhi.jpg").render
+      endDiv.appendChild(endDom)
+      document.body.appendChild(endDiv)
+    }
+    println("startx="+startx+"starty"+starty+"endx"+endx+"endy"+endy)
+  }
+
+
+
   dom.window.setTimeout(()=>{
     xlength=dom.document.getElementById("svg").scrollWidth
     ylength=dom.document.getElementById("svg").scrollHeight
     val paths = dom.document.getElementById("svg").asInstanceOf[IFrame].contentDocument.getElementsByClassName("path")
-    val background = dom.document.getElementById("svg").asInstanceOf[IFrame].contentDocument.getElementById("background").asInstanceOf[SVG]
+    val outside = dom.document.getElementById("svg").asInstanceOf[IFrame].contentDocument.getElementsByClassName("outside").asInstanceOf[SVG]
+    val houses = dom.document.getElementById("svg").asInstanceOf[IFrame].contentDocument.getElementsByClassName("house")
+
+    for(i<- 0 to houses.length-1){
+      val houseSvg=houses(i).asInstanceOf[SVG]
+      houseSvg.onclick = {
+        e:MouseEvent =>
+          e.preventDefault()
+          setHouse(e)
+      }
+    }
+    outside.onclick={
+      e:MouseEvent =>
+        e.preventDefault()
+        println("x="+e.clientX+"y="+e.clientY)
+    }
 
 
     println("pathslength="+paths.length)
     println("path0"+paths(0))
-    println("background="+background)
+    println("outside="+outside)
     for(i<- 0 to paths.length-1){
       val pathE=paths(i).asInstanceOf[dom.Element]
       val pathSvg=paths(i).asInstanceOf[SVG]
@@ -83,7 +131,7 @@ object Path extends Component[Div]{
       pathList.append(PathInfo(y,x,height,width))
       pathSvg.onclick = {
         e:MouseEvent =>
-          setSvgAttribute(e)
+          //setSvgAttribute(e)
           e.preventDefault()
       }
     }
@@ -97,10 +145,9 @@ object Path extends Component[Div]{
       val start=data(a)
       val end=data(a+1)
       //创建div
-      val top=start.x*10+86
-      val line=div(*.width:="10px",*.height:="10px",*.left:=s"${start.y*10}px",*.top:=s"${top}px",*.position.absolute,*.visibility.visible,*.backgroundColor:="#cdcdcd").render
+      val top=start.x*5+72
+      val line=div(*.width:="5px",*.height:="5px",*.left:=s"${start.y*5}px",*.top:=s"${top}px",*.position.absolute,*.visibility.visible,*.backgroundColor:="#FF6A6A").render
       lineList.append(line)
-      //document.body.appendChild(line)
     }
     lineList.map{line=>
       document.body.appendChild(line)
@@ -110,13 +157,31 @@ object Path extends Component[Div]{
 
 
   changeNameButton.onclick = { e: MouseEvent =>
+    if(startx*starty==0||endx*endy==0){
+      if(startBox.value==""||endBox.value==""){
+        JsFunc.alert("起始点不可为空")
+      }else{
+        val houses = dom.document.getElementById("svg").asInstanceOf[IFrame].contentDocument.getElementsByClassName("house")
+        for(i<- 0 to houses.length-1){
+          val houseSvg=houses(i).asInstanceOf[dom.Element]
+          val houseName=houseSvg.getAttribute("name")
+          if(houseName==startBox.value){
+             startx=houseSvg.getAttribute("doorx").toInt
+             starty=houseSvg.getAttribute("doory").toInt
+          }else if(houseName==endBox.value){
+            endx=houseSvg.getAttribute("doorx").toInt
+            endy=houseSvg.getAttribute("doory").toInt
+          }
+        }
+      }
+    }
     val bodyStr=Text(xlength,ylength,pathList.toList,startx,starty,endx,endy).asJson.noSpaces
     Http.postJsonAndParse[TextRsp](textUrl,bodyStr).foreach{
       case Right(rsp)=>
         rsp.errCode match{
           case 0=>
             println("成功")
-            JsFunc.alert(rsp.data.toString)
+            //JsFunc.alert(rsp.data.toString)
             drawPath(rsp.data)
           case x=>
             println(s"失败$x")
@@ -135,6 +200,8 @@ object Path extends Component[Div]{
     endy=0
     startDiv.textContent= ""
     endDiv.textContent=""
+    startBox.value=""
+    endBox.value=""
     lineList.map{line=>
       document.body.removeChild(line)
     }
@@ -152,6 +219,7 @@ object Path extends Component[Div]{
     div(
       title,
       svg,
+      startBox,endBox,
       changeNameButton,
       restartButton
     ).render

@@ -72,5 +72,30 @@ object Shortcut {
     y + m
   }
 
+  def formatyyyyMMddHHmm(timeMs: Long) = {
+    val date = new Date(timeMs)
+    val y = date.getFullYear()
+    val m = date.getMonth() + 1 match {
+      case x if x <= 9 => "0" + x
+      case x => x.toString
+    }
+    val d = date.getDate() match {
+      case x if x <= 9 => "0" + x
+      case x => x.toString
+    }
+
+    val h = date.getHours() match {
+      case x if x <= 9 => "0" + x
+      case x => x.toString
+    }
+
+    val mm = date.getMinutes() match {
+      case x if x <= 9 => "0" + x
+      case x => x.toString
+    }
+
+    y +"-"+ m +"-"+ d + "  " + h + ":" + mm
+  }
+
 
 }

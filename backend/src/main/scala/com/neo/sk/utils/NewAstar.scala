@@ -32,12 +32,12 @@ object NewAstar {
     var endNodeArray:Array[Array[Int]]=nodeArray
 
 
-    for(i<- 0 to NODES.length-1){
-      for(j<- 0 to NODES(0).length-1){
-        System.out.print(NODES(i)(j) + ", ")
-      }
-      System.out.println
-    }
+//    for(i<- 0 to NODES.length-1){
+//      for(j<- 0 to NODES(0).length-1){
+//        System.out.print(NODES(i)(j) )
+//      }
+//      System.out.println
+//    }
     val arrayList: ListBuffer[NewAstar.Node] = new ListBuffer[NewAstar.Node]
     while (parent != null) {
       {
@@ -45,16 +45,16 @@ object NewAstar {
         parent = parent.parent
       }
     }
-    System.out.println("\n")
+   // System.out.println("\n")
 
     for(i<- 0 to NODES.length-1){
       for(j<- 0 to NODES(0).length-1){
         if (exists(arrayList, i, j)) {
-          System.out.print("@, ")
+          System.out.print("@")
           endNodeArray(i)(j)=6
         }
         else {
-          System.out.print(NODES(i)(j) + ", ")
+          System.out.print(NODES(i)(j))
         }
       }
       System.out.println

@@ -49,6 +49,24 @@ package object ptcl {
   //company
 
   case class CompanyConfirm(email: String, psw: String) extends Request
+  case class CreateMapReq(
+                                     mapName: String,
+                                     map: String
+                                   ) extends Request
+  case class UpdateMapReq(
+                                     id: Int,
+                                     mapName: String,
+                                     map: String
+                                   ) extends Request
+
+  case class MapInfo(
+                            id: Int,
+                            mapName: String,
+                            map: String,
+                            createTime:Long
+                          )
+  case class MapInfoRsp(data: List[MapInfo], errCode: Int = 0, msg: String = "ok") extends Response
+  case class ImageUploadRsp(filePath: String, errCode: Int = 0, msg: String = "ok") extends Response
 
 
 

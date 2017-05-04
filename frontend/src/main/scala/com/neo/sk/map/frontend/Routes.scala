@@ -24,6 +24,24 @@ object Routes {
     val text=mapRoot+"/text"
   }
 
+  object CompanyRoute{
+    val  companyRoot=baseUrl+"/company"
+    val login=companyRoot+"/login"
+    val loginSubmit = companyRoot + "/loginSubmit"
+    val register=companyRoot+"/register"
+    val registerSubmit=companyRoot+"/registerSubmit"
+    val home=companyRoot+"/home"
+    val resetPas=companyRoot+"/updatePwd"
+    val info=companyRoot+"/info"
+    val logout=companyRoot+"/logout"
+    val createMap=companyRoot+"/createMap"
+    val mapList=companyRoot+"/maplist"
+    def deleteMap(id:Long)=companyRoot+s"/deleteMap?id=$id"
+    val updateMap=companyRoot+"/updateMap"
+    val uploadMap = companyRoot + "/uploadMap"
+    def getMap(mapPath: String) = companyRoot + s"/getMap?path=$mapPath"
+  }
+
 
 
 

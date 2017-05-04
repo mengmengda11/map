@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" style="cursor: default;">
+    <g>
+        <polygon class="outside" points="40,600 820,600 820,60 220,60 40,160 " fill="#c0c0c0" stroke="#c0c0c0">
+        </polygon>
+    </g>
+    <g id="wrap" width="100%" height="100%" transform="scale(1) ">
+    <g>
+        <polygon class="house"  doorx="72" doory="236" name="商店1号" points="80,220 80,280 120,280 140,240 100,200 " fill="#ff9999" stroke="#c0c0c0" flag="false" style="cursor: move;"></polygon>
+        <text x="100" y="260" fill="white">商店1号</text>
+    </g>
+    <g>
+        <polygon class="house"  doorx="190" doory="220" name="商店2号" points="100,200 140,240 180,200 160,140 " fill="#c8c8ff" stroke="#c0c0c0" flag="false" style="cursor: move;"></polygon>
+        <text x="130" y="240" fill="white">商店2号</text>
+    </g>
+    <g transform="translate(0,0)">
+        <polygon class="house"  doorx="220" doory="200" name="商店3号" points="160,140 180,200 240,180 200,120 " fill="#c8c8ff" stroke="#c0c0c0" flag="false" style="cursor: move;"></polygon>
+        <text x="180" y="180" fill="white">商店3号</text>
+    </g>
+     <g>
+         <polygon class="house"  doorx="265" doory="196" name="商店4号" points="200,120 240,180 300,180 300,100 240,100 " fill="#c8c8ff" stroke="#c0c0c0" flag="false" style="cursor: move;"></polygon>
+            <text x="220" y="160" fill="white">商店4号</text>
+     </g>
+     <g>
+         <rect name="商店5号" doorx="338" doory="198" x="300" y="100" width="80" height="80" stroke="#c0c0c0" fill="#c8c8ff" class="house" style="cursor: e-resize;"></rect>
+         <text x="320" y="120" fill="white">商店5号</text>
+     </g>
+     <g>
+         <polygon class="house"  doorx="476" doory="199" name="商店6号" points="420,100 420,160 440,160 440,180 500,180 500,120 540,120 540,100 " fill="#c8c8ff" stroke="#c0c0c0" flag="false" style="cursor: move;"></polygon>
+         <text x="440" y="140" fill="white">商店6号</text>
+     </g>
+     <g>
+         <rect name="商店7号"  doorx="594" doory="199" x="520" y="120" width="20" height="60" stroke="#c0c0c0" fill="#ffddff" class="house" style="cursor: se-resize;"></rect>
+         <text x="540" y="140" fill="white">商店7号</text>
+     </g>
+        <g>
+            <polygon class="house"  doorx="599" doory="199" name="商店8号" points="560,100 560,120 580,120 580,160 540,160 540,180 640,180 640,100 " fill="#e6ac00" stroke="#c0c0c0" flag="false" style="cursor: move;"></polygon>
+            <text x="580" y="140" fill="white">商店8号</text>
+        </g>
+        <g>
+            <rect x="640" y="100"  doorx="673" doory="199" name="商店9号" width="60" height="80" stroke="#c0c0c0" fill="#e6ac00" class="house" style="cursor: move;"></rect>
+            <text x="660" y="120" fill="white">商店9号</text>
+        </g>
+        <g>
+            <rect name="商店10号"  doorx="741" doory="199" x="700" y="100" width="80" height="80" stroke="#c0c0c0" fill="#c8c8ff" class="house" style="cursor: e-resize;"></rect>
+            <text x="740" y="140" fill="white">商店10号</text>
+        </g>
+        <g>
+            <polygon name="商店11号"  doorx="127" doory="438" class="house" points="100,360 100,420 160,420 160,320 140,320 120,360 " fill="#c8c8ff" stroke="#c0c0c0" flag="false" style="cursor: move;"></polygon>
+            <text x="120" y="400" fill="white">商店11号</text>
+        </g>
+        <g transform="translate(0,0)">
+            <polygon class="house"  doorx="297" doory="360" name="商店11-1号" points="160,320 160,420 260,420 280,400 280,320 " fill="#008000" stroke="#ff0080" flag="false" style="cursor: move;" stroke-width="0.5"></polygon>
+            <text x="180" y="360" fill="white">商店11-1号</text>
+        </g>
+        <g transform="translate(0,0)">
+            <polygon class="house"  doorx="297" doory="306" name="商店12号" points="200,260 140,320 280,320 280,260 " fill="#c8c8ff" stroke="#c0c0c0" flag="false" style="cursor: move;"></polygon>
+            <text x="220" y="300" fill="white">商店12号</text>
+        </g>
+        <g>
+            <polygon class="house"  doorx="297" doory="247" name="商店13号" points="220,240 200,260 280,260 280,240 260,220 240,220 " fill="#c8c8ff" stroke="#c0c0c0" flag="false" style="cursor: move;"></polygon>
+            <text x="240" y="280" fill="white">商店13号</text>
+        </g>
+        <g>
+            <polygon class="house"  doorx="552" doory="203" name="商店14号" points="520,220 500,240 500,260 580,260 580,220 " fill="#c8c8ff" stroke="#c0c0c0" flag="false" style="cursor: move;"></polygon>
+            <text x="540" y="260" fill="white">商店14号</text>
+        </g>
+        <g>
+            <polygon class="house"  doorx="617" doory="203" name="商店15号" points="580,220 580,260 500,260 500,280 660,280 660,220 " fill="#c8c8ff" stroke="#c0c0c0" flag="true" style="cursor: move;"></polygon>
+            <text x="600" y="260" fill="white">商店15号</text>
+        </g>
+        <g>
+            <polygon class="house"  doorx="490" doory="306" name="商店16号" points="660,340 500,340 500,280 660,280 " fill="#c8c8ff" stroke="#c0c0c0" flag="true" style="cursor: move;"></polygon>
+            <text x="680" y="380" fill="white">商店16号</text>
+        </g>
+        <g>
+            <rect name="商店17号"  doorx="490" doory="377" x="500" y="340" width="120" height="80" stroke="#c0c0c0" fill="#c8c8ff" class="house" style="cursor: move;"></rect>
+            <text x="520" y="360" fill="white">商店17号</text>
+        </g>
+        <g>
+            <rect name="商店18号"  doorx="664" doory="400" x="620" y="340" width="80" height="80" stroke="#c0c0c0" fill="#c8c8ff" class="house" style="cursor: move;"></rect>
+            <text x="640" y="360" fill="white">商店18号</text>
+        </g>
+        <g>
+            <rect name="商店19号"  doorx="717" doory="400" x="700" y="340" width="40" height="80" stroke="#c0c0c0" fill="#ffddff" class="house" style="cursor: move;"></rect>
+            <text x="720" y="360" fill="white">商店19号</text>
+        </g>
+        <g>
+            <rect name="商店20号"  doorx="759" doory="400" x="740" y="340" width="40" height="80" stroke="#c0c0c0" fill="#ff9999" class="house" style="cursor: s-resize;"></rect>
+            <text x="760" y="360" fill="white">商店20号</text>
+        </g>
+        <g>
+            <rect name="商店21号"  doorx="800" doory="320" x="660" y="300" width="120" height="40" stroke="#c0c0c0" fill="#e6ac00" class="house" style="cursor: move;"></rect>
+            <text x="680" y="320" fill="white">商店21号</text>
+        </g>
+        <g>
+            <rect name="商店22号"  doorx="800" doory="289" x="660" y="280" width="120" height="20" stroke="#c0c0c0" fill="#ffddff" class="house" style="cursor: s-resize;"></rect>
+            <text x="680" y="300" fill="white">商店22号</text>
+        </g>
+        <g>
+            <rect name="商店23号" doorx="800" doory="270" x="660" y="260" width="120" height="20" stroke="#c0c0c0" fill="#ff9999" class="house" style="cursor: s-resize;"></rect>
+            <text x="680" y="280" fill="white">商店23号</text>
+        </g>
+        <g>
+            <rect name="商店24号" doorx="" doory="" x="660" y="220" width="1" height="95" stroke="#c0c0c0" fill="#e6ac00" class="house" style="cursor: e-resize;"></rect>
+            <text x="680" y="240" fill="white">商店24号</text>
+        </g>
+        <g>
+            <rect name="商店25号"  doorx="800" doory="250" x="720" y="220" width="60" height="40" stroke="#c0c0c0" fill="#c8c8ff" class="house" style="cursor: se-resize;"></rect>
+            <text x="740" y="240" fill="white">商店25号</text>
+        </g>
+        <g>
+            <rect name="商店26号"  doorx="" doory="" x="320" y="260" width="140" height="120" stroke="#c0c0c0" fill="#ffffff" class="house" style="cursor: move;" stroke-width="1.5"></rect>
+            <text x="360" y="300" fill="white">商店26号</text>
+        </g>
+        <g>
+            <rect name="商店27号"  doorx="108" doory="577" x="80" y="520" width="60" height="40" stroke="#c0c0c0" fill="#ff9999" class="house" style="cursor: move;"></rect>
+            <text x="120" y="560" fill="white">商店27号</text>
+        </g>
+        <g>
+            <rect name="商店28号"  doorx="169" doory="577" x="140" y="520" width="60" height="40" stroke="#c0c0c0" fill="#e6ac00" class="house" style="cursor: s-resize;"></rect>
+            <text x="180" y="560" fill="white">商店28号</text>
+        </g>
+        <g>
+            <polygon class="house" doorx="161" doory="640" name="商店29号" points="120,460 120,480 100,480 100,520 200,520 200,460 " fill="#c8c8ff" stroke="#c0c0c0" flag="true" style="cursor: move;"></polygon>
+            <text x="140" y="500" fill="white">商店29号</text>
+        </g>
+        <g>
+            <polygon class="house"  doorx="238" doory="640" name="商店30号" points="200,460 200,500 240,500 260,480 280,480 280,460 " fill="#ff9999" stroke="#c0c0c0" flag="false" style="cursor: move;"></polygon>
+            <text x="220" y="500" fill="white">商店30号</text>
+        </g>
+        <g>
+            <rect name="商店31号" doorx="260" doory="533" x="200" y="500" width="40" height="60" stroke="#c0c0c0" fill="#e6ac00" class="house" style="cursor: move;"></rect>
+            <text x="220" y="520" fill="white">商店31号</text>
+        </g>
+        <g>
+            <polygon class="house" doorx="372" doory="435" name="商店32号" points="320,440 320,560 400,560 400,500 360,500 360,460 340,440 " fill="#c8c8ff" stroke="#c0c0c0" flag="false" style="cursor: move;"></polygon>
+            <text x="340" y="480" fill="white">商店32号</text>
+        </g>
+        <g>
+            <polygon class="house" doorx="510" doory="440" name="商店33号" points="480,480 480,560 540,560 540,440 520,440 500,460 500,480 " fill="#c8c8ff" stroke="#c0c0c0" flag="false" style="cursor: move;"></polygon>
+            <text x="500" y="520" fill="white">商店33号</text>
+        </g>
+        <g transform="translate(20,0)">
+            <polygon class="house" doorx="624" doory="430" name="商店34号" points="540,440 540,480 580,480 580,560 680,560 680,440 " fill="#c8c8ff" stroke="#c0c0c0" flag="true" style="cursor: move;"></polygon>
+            <text x="560" y="480" fill="white">商店34号</text>
+        </g>
+        <g>
+            <rect name="商店35号"  doorx="742" doory="430" x="700" y="440" width="80" height="60" stroke="#c0c0c0" fill="#e6ac00" class="house" style="cursor: se-resize;"></rect>
+            <text x="720" y="460" fill="white">商店35号</text>
+        </g>
+    </g>
+</svg>

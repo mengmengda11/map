@@ -23,9 +23,18 @@ trait MapService extends AuthService{
 
 
   def exists(endArray:Array[Array[Int]],startx:Int,starty:Int,endx:Int,endy:Int):Boolean={
-   if(endArray(startx)(starty)==1||endArray(endx)(endy)==1){
+
+   if(endArray(startx)(starty)==1) {
+     log.debug("起点不对")
      return false
+   }else{
+     if( endArray(endx)(endy)==1){
+       return false
+     }
+
    }
+
+    log.debug("对啊对啊")
     return true
   }
 
@@ -38,13 +47,13 @@ trait MapService extends AuthService{
         startArray(i)(j)=1
       }
     }
-    for(k<- 0 to pathList.length-1){
-      for(a<-pathList(k).x/10 to pathList(k).x/10+pathList(k).width/10-1){
-        for(b<- pathList(k).y/10 to pathList(k).y/10+pathList(k).height/10-1){
-          startArray(a)(b)=0
+        for(k<- 0 to pathList.length-1){
+          for(a<-pathList(k).x/5 to pathList(k).x/5+pathList(k).width/5-1){
+            for(b<- pathList(k).y/5 to pathList(k).y/5+pathList(k).height/5-1){
+              startArray(a)(b)=0
+            }
+          }
         }
-      }
-    }
 
     return startArray
 
@@ -57,33 +66,44 @@ trait MapService extends AuthService{
         entity(as[Either[Error,Text]]){
           case Right(info) =>
             log.info(s"get question update data: $info")
-            val startx=info.starty/10.toInt
-            val starty=info.startx/10.toInt
-            val endx=info.endy/10.toInt
-            val endy=info.endx/10.toInt
+            val startx=info.starty/5
+            val starty=info.startx/5
+            val endx=info.endy/5
+            val endy=info.endx/5
 
 
-            val endArray=toArray(info.xlength/10,info.ylength/10,info.path)
+            //val endArray=toArray(info.xlength/5,info.ylength/5,info.path)
+            val endArray=Draw.imgMtr("D:\\newmap.jpg")
+//            log.debug("++++++++++++++++++++++")
+//            for(i<-0 to endArray.length-1){
+//              for(j<- 0 to endArray(0).length-1){
+//                System.out.print(endArray(i)(j))
+//              }
+//              System.out.println
+//            }
             val startNode: NewAstar.Node = new NewAstar.Node(startx,starty)
             val endNode: NewAstar.Node = new NewAstar.Node(endx,endy)
             if(exists(endArray,startx,starty,endx,endy)==false){
               complete(CommonRsp(1001001, "please select correct start and end point"))
-            }
-
-            val endend=NewAstar.main(endArray,startNode,endNode)
-            val xyList:ListBuffer[Info]=new ListBuffer[Info]
-            for(i<-0 to info.ylength/10-1){
-              for(j<- 0 to info.xlength/10-1){
-                if(endend(i)(j)==6){
-                 val a=Info(i,j)
-                  xyList.append(a)
+            }else{
+              val endend=NewAstar.main(endArray,startNode,endNode)
+              val xyList:ListBuffer[Info]=new ListBuffer[Info]
+              log.debug("********************")
+              for(i<-0 to endend.length-1){
+                for(j<- 0 to endend(0).length-1){
+                  System.out.print(endend(i)(j))
+                  if(endend(i)(j)==6){
+                    val a=Info(i,j)
+                    xyList.append(a)
+                  }
                 }
+                System.out.println
               }
+              log.debug("listlength="+xyList.length)
+
+
+              complete(TextRsp(0,"ok",xyList.toList))
             }
-            log.debug("listlength="+xyList.length)
-
-
-            complete(TextRsp(0,"ok",xyList.toList))
           case Left(e) =>
             complete("error")
         }

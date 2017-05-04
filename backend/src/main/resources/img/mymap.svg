@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+    <g id="wrap"><g>
+        <rect x="88" y="62" width="119" height="100" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
+        <text fill="white" x="128" y="102">名称</text></g>
+        <g><rect x="84" y="196" width="125" height="100" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
+            <text fill="white" x="124" y="236">名称</text></g>
+        <g><rect x="246" y="125" width="112" height="100" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
+            <text fill="white" x="286" y="165">名称</text></g>
+        <g><rect x="246" y="261" width="112" height="100" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
+            <text fill="white" x="286" y="301">名称</text></g>
+        <g><rect x="401" y="56" width="200" height="100" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
+            <text fill="white" x="441" y="96">名称</text></g>
+        <g><rect x="404" y="203" width="200" height="100" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
+            <text fill="white" x="444" y="243">名称</text></g>
+        <g><rect x="83" y="388" width="207" height="58" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
+            <text fill="white" x="123" y="428">名称</text></g>
+        <g><rect x="362" y="390" width="254" height="58" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
+            <text fill="white" x="402" y="430">名称</text></g>
+        <g><rect class="path" x="18" y="162" width="227" height="37" fill="#e1ffe1" flag="false"></rect>
+            <text fill="white" x="58" y="202">名称</text></g>
+        <g><rect class="path" x="46" y="296" width="200" height="92" fill="#e1ffe1" flag="false"></rect>
+            <text fill="white" x="86" y="336">名称</text></g>
+        <g><rect class="path" x="209" y="226" width="195" height="37" fill="#e1ffe1" flag="false"></rect>
+            <text fill="white" x="249" y="266">名称</text></g>
+        <g><rect class="path" x="207" y="25" width="193" height="100" fill="#e1ffe1" flag="false"></rect>
+            <text fill="white" x="247" y="65">名称</text></g>
+        <g><rect class="path" x="400" y="156" width="214" height="51" fill="#e1ffe1" flag="false"></rect>
+            <text fill="white" x="440" y="196">名称</text></g>
+        <g><rect class="path" x="358" y="304" width="268" height="85" fill="#e1ffe1" flag="false"></rect>
+            <text fill="white" x="398" y="344">名称</text></g>
+        <g><rect class="path" x="238" y="361" width="200" height="27" fill="#e1ffe1" flag="false"></rect>
+            <text fill="white" x="278" y="401">名称</text></g>
+        <g><rect class="path" x="206" y="122" width="42" height="186" fill="#e1ffe1" flag="false"></rect>
+            <text fill="white" x="246" y="162">名称</text></g>
+        <g><rect class="path" x="357" y="119" width="46" height="193" fill="#e1ffe1" flag="false"></rect>
+            <text fill="white" x="397" y="159">名称</text></g>
+        <g><rect class="path" x="287" y="386" width="78" height="100" fill="#e1ffe1" flag="false"></rect>
+            <text fill="white" x="327" y="426">名称</text></g></g></svg>

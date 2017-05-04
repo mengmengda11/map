@@ -4,42 +4,42 @@
             <path stroke="#f0f0f0" fill="none" d="M0,0H20V20"></path>
         </pattern>
     </defs>
-    <rect id="background" width="100%" height="100%" fill="url(#grid)"></rect>
+    <rect id="background" width="700" height="100%" fill="url(#grid)"></rect>
     <g>
-        <rect x="180" y="140" width="200" height="100" rx="0" ry="0" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
-        <text fill="white" x="280" y="140">名称</text>
+        <rect class="house" name="商店0号" doorx="250" doory="240" x="180" y="140" width="200" height="100" rx="0" ry="0" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
+        <text fill="white" x="280" y="140">商店0号</text>
     </g>
     <g>
-        <rect x="440" y="140" width="200" height="100" rx="0" ry="0" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
-        <text fill="white" x="480" y="180">名称</text>
+        <rect class="house" name="商店1号" doorx="432" doory="190" x="440" y="140" width="200" height="100" rx="0" ry="0" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
+        <text fill="white" x="480" y="180">商店1号</text>
     </g>
     <g>
-        <rect x="700" y="140" width="200" height="100" rx="0" ry="0" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
-        <text fill="white" x="740" y="180">名称</text>
+        <rect class="house" name="商店2号" doorx="787" doory="240" x="700" y="140" width="200" height="100" rx="0" ry="0" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
+        <text fill="white" x="740" y="180">商店2号</text>
     </g>
     <g>
-        <rect x="180" y="300" width="200" height="100" rx="0" ry="0" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
-        <text fill="white" x="160" y="260">名称</text>
+        <rect class="house" name="商店3号" doorx="381" doory="351" x="180" y="300" width="200" height="100" rx="0" ry="0" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
+        <text fill="white" x="160" y="260">商店3号</text>
     </g>
     <g>
-        <rect x="440" y="300" width="200" height="100" rx="0" ry="0" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
-        <text fill="white" x="480" y="340">名称</text>
+        <rect class="house" name="商店4号" doorx="530" doory="402" x="440" y="300" width="200" height="100" rx="0" ry="0" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
+        <text fill="white" x="480" y="340">商店4号</text>
     </g>
     <g>
-        <rect x="700" y="300" width="200" height="100" rx="0" ry="0" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
-        <text fill="white" x="740" y="340">名称</text>
+        <rect class="house" name="商店5号" doorx="801" doory="401" x="700" y="300" width="200" height="100" rx="0" ry="0" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
+        <text fill="white" x="740" y="340">商店5号</text>
     </g>
     <g>
-        <rect x="180" y="460" width="200" height="100" rx="0" ry="0" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
-        <text fill="white" x="220" y="500">名称</text>
+        <rect class="house" name="商店6号" doorx="266" doory="446" x="180" y="460" width="200" height="100" rx="0" ry="0" fill="#d2d2ff" stroke="#c0c0c0" flag="false">00</rect>
+        <text fill="white" x="220" y="500">商店6号</text>
     </g>
     <g>
-        <rect x="440" y="460" width="200" height="100" rx="0" ry="0" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
-        <text fill="white" x="480" y="500">名称</text>
+        <rect class="house" name="商店7号" doorx="435" doory="503" x="440" y="460" width="200" height="100" rx="0" ry="0" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
+        <text fill="white" x="480" y="500">商店7号</text>
     </g>
     <g>
-        <rect x="700" y="460" width="200" height="100" rx="0" ry="0" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
-        <text fill="white" x="740" y="500">名称</text>
+        <rect class="house" name="商店8号" doorx="790" doory="452" x="700" y="460" width="200" height="100" rx="0" ry="0" fill="#d2d2ff" stroke="#c0c0c0" flag="false"></rect>
+        <text fill="white" x="740" y="500">商店8号</text>
     </g>
     <g>
         <rect class="path" x="180" y="240" width="720" height="60" rx="0" ry="0" fill="#ffc8ff" stroke="#c0c0c0" flag="false"></rect>
