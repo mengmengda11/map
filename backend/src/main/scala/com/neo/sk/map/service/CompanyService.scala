@@ -17,7 +17,6 @@ import java.nio.file.Paths
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity, Multipart}
 import akka.stream.scaladsl.FileIO
-import io.circe.generic.auto._
 import com.neo.sk.map.common._
 import com.neo.sk.map.ptcl._
 import com.neo.sk.utils.FileUtil
@@ -62,7 +61,40 @@ trait CompanyService extends AuthService{
         complete(CommonRsp(1002003, "Pattern error."))
     }
   }
+  private val registerSubmit = (path("registerSubmit") & post & pathEndOrSingleSlash){
+    loggingAction{ ctx =>
+      entity(as[Either[Error,RegisterReq]]){
+        case Right(info) =>
+          dealFutureResult(
+            CompanyDao.isCompanyEmailExist(info.email).flatMap{
+              case true =>
+                Future(complete("email is exists"))
+              case false =>
+                val timestamp = System.currentTimeMillis()
+                val company = SlickTables.rCompany(
+                  -1,
+                  info.companyName,
+                  info.password,
+                  info.email,
+                  1,
+                  timestamp.toInt
+                )
+                CompanyDao.createCompany(company).map{ _ =>
+                  complete(CommonRsp())
+                }.recover{
+                  case t =>
+                    t.printStackTrace()
+                    log.error(s"add company error.")
+                    complete(CommonRsp(1002003, "Pattern error."))
+                }
+            }
+          )
 
+        case Left(e) =>
+          complete(CommonRsp(1002003, "Pattern error."))
+      }
+    }
+  }
 
 
 
@@ -76,7 +108,7 @@ trait CompanyService extends AuthService{
     CompanyAction{ company =>
       entity(as[Either[Error, CreateMapReq]]){
         case Right(info) =>
-          val q = SlickTables.rMaps(-1,company.id.toInt,info.map,System.currentTimeMillis(),info.mapName)
+          val q = SlickTables.rMaps(-1,company.id.toInt,info.map,System.currentTimeMillis(),info.mapName,1,info.mapPic,0,info.des)
           dealFutureResult(
             MapDao.create(q).map{ _ =>
               complete(CommonRsp())
@@ -98,7 +130,7 @@ trait CompanyService extends AuthService{
       dealFutureResult(
         MapDao.getMap(company.id.toInt).map{ seq =>
           val data = seq.map(q =>
-            MapInfo(q.id, q.mapname, q.map, q.createtime)
+            MapInfo(q.id, q.companyid,q.mapname, q.des,q.map, q.mapPic,q.createtime,q.state,q.review)
           ).toList
           complete(MapInfoRsp(data))
         }.recover{
@@ -110,6 +142,30 @@ trait CompanyService extends AuthService{
       )
     }
   }
+
+  private val getAmap = (path("getAmap") & get & pathEndOrSingleSlash){
+    CompanyAction{ company =>
+      parameters(
+        'id.as[Long]
+      ){
+        case mapId =>
+          dealFutureResult(
+            MapDao.getMapById(mapId.toInt).map{ seq =>
+              val data = seq.map(q =>
+                MapInfo(q.id,q.companyid, q.mapname, q.map,q.des,q.mapPic, q.createtime,q.state,q.review)
+              ).toList
+              complete(MapInfoRsp(data))
+            }.recover{
+              case t =>
+                t.printStackTrace()
+                log.error(s"delete map  error.")
+                complete(CommonRsp(1000004, "internal error."))
+            }
+          )
+      }
+    }
+  }
+
 
   private val deleteMap = (path("deleteMap") & get & pathEndOrSingleSlash){
     CompanyAction{ company =>
@@ -131,6 +187,47 @@ trait CompanyService extends AuthService{
     }
   }
 
+
+  private val unableMap = (path("unableMap") & get & pathEndOrSingleSlash){
+    CompanyAction{ company =>
+      parameters(
+        'id.as[Long]
+      ){
+        case mapId =>
+          dealFutureResult(
+            MapDao.unableMap(mapId.toInt).map{ _ =>
+              complete(CommonRsp())
+            }.recover{
+              case t =>
+                t.printStackTrace()
+                log.error(s"unable map  error.")
+                complete(CommonRsp(1000004, "internal error."))
+            }
+          )
+      }
+    }
+  }
+
+  private val ableMap = (path("ableMap") & get & pathEndOrSingleSlash){
+    CompanyAction{ company =>
+      parameters(
+        'id.as[Long]
+      ){
+        case mapId =>
+          dealFutureResult(
+            MapDao.ableMap(mapId.toInt).map{ _ =>
+              complete(CommonRsp())
+            }.recover{
+              case t =>
+                t.printStackTrace()
+                log.error(s"able map  error.")
+                complete(CommonRsp(1000004, "internal error."))
+            }
+          )
+      }
+    }
+  }
+
   private val updateMap = (path("updateMap") & post & pathEndOrSingleSlash){
     CompanyAction{ company =>
       entity(as[Either[Error,UpdateMapReq]]){
@@ -140,7 +237,7 @@ trait CompanyService extends AuthService{
             MapDao.getMapByCompanyId(info.id).flatMap{
               case Some(companyId) =>
                 if(companyId == company.id){
-                  MapDao.update(company.id.toInt, info.id, info.mapName, info.map).map{ _ =>
+                  MapDao.update(company.id.toInt, info.id, info.mapName,info.des, info.map,info.mapPic).map{ _ =>
                     complete(CommonRsp())
                   }.recover{
                     case t =>
@@ -161,37 +258,48 @@ trait CompanyService extends AuthService{
     }
   }
 
-  private val uploadMap = (path("uploadMap") & post ){
+//  private val uploadMap = (path("uploadMap") & post ){
+//    CompanyAction{ company =>
+//      entity(as[Multipart.FormData]){ formData =>
+//       fileUpload("fileUpload"){
+//          case (fileInfo, fileStream) =>
+//            log.info(s"fileName === ${fileInfo.fileName}")
+//            val path = Paths.get(System.getProperty("java.io.tmpdir")) resolve fileInfo.fileName
+//            val sink = FileIO.toPath(path)
+//            val writeResult = fileStream.runWith(sink)
+//            onSuccess(writeResult){result =>
+//              result.status match {
+//                case Success(_) =>
+//                  val file = new File(path.toUri)
+//                  val dirPath = System.getProperty("user.dir") + AppSettings.imageUpload
+//                  val dir = new File(dirPath)
+//                  if(!dir.exists()){
+//                    dir.mkdir()
+//                  }
+//                  val destFile = new File(dirPath + System.currentTimeMillis() + fileInfo.fileName)
+//                  FileUtil.copyFile(file, destFile)
+//                  val destFilePath = destFile.getAbsolutePath
+//                  log.info(s"dest file path === $destFilePath")
+//                  complete(ImageUploadRsp(destFilePath))
+//                case Failure(e) =>
+//                  log.error(s"upload img error: $e")
+//                  complete(CommonRsp(1000009, "upload file error."))
+//              }
+//            }
+//        }
+//      }
+//    }
+//  }
 
+  private val uploadMap = (path("uploadMap") & post ){
     CompanyAction{ company =>
       entity(as[Multipart.FormData]){ formData =>
-       fileUpload("fileUpload"){
+        fileUpload("fileUpload"){
           case (fileInfo, fileStream) =>
             log.info(s"fileName === ${fileInfo.fileName}")
-            val path = Paths.get(System.getProperty("java.io.tmpdir")) resolve fileInfo.fileName
-            val sink = FileIO.toPath(path)
-            val writeResult = fileStream.runWith(sink)
-            onSuccess(writeResult){result =>
-              result.status match {
-                case Success(_) =>
-                  val file = new File(path.toUri)
-                  val dirPath = System.getProperty("user.dir") + AppSettings.imageUpload
-                  val dir = new File(dirPath)
-                  if(!dir.exists()){
-                    dir.mkdir()
-                  }
-                  val destFile = new File(dirPath + System.currentTimeMillis() + fileInfo.fileName)
-                  FileUtil.copyFile(file, destFile)
-                  val destFilePath = destFile.getAbsolutePath
-                  log.info(s"dest file path === $destFilePath")
-                  complete(ImageUploadRsp(destFilePath))
-                case Failure(e) =>
-                  log.error(s"upload img error: $e")
-                  complete(CommonRsp(1000009, "upload file error."))
-              }
-            }
-
-
+                  log.info(s"dest file path === $fileInfo.fileName")
+                  val path="/hw1701a/static/img/"+fileInfo.fileName
+                  complete(ImageUploadRsp(fileInfo.fileName))
         }
       }
     }
@@ -221,7 +329,61 @@ trait CompanyService extends AuthService{
 
   }
 
+  private val passwordUpdate = (path("updatePwd") & post & pathEndOrSingleSlash){
+    CompanyAction{ company =>
+      entity(as[Either[Error, CompanyUpdatePwdReq]]){
+        case Right(info) =>
+          dealFutureResult(
+            CompanyDao.getCompanyById(company.id.toInt).flatMap{
+              case Some(companyInfo) =>
+                if(info.oldPwd == companyInfo.password){
+                  CompanyDao.updatePsw(company.id.toInt, info.newPwd).map{ _ =>
+                    complete(CommonRsp())
+                  }.recover{
+                    case t =>
+                      t.printStackTrace()
+                      log.error(s"company update password error.")
+                      complete(s"internal error")
+                  }
+                }else{
+                  log.info(s"old password is wrong.")
+                  Future(complete(s"old paw error"))
+                }
+              case _ =>
+                log.debug(s"company not exist.")
+                Future(complete(s"company not exists"))
+            }
+          )
+        case Left(e) =>
+          complete(s"post json error")
+      }
+    }
+  }
 
+  private val getUserInfo=(path("getUserInfo") &get & pathEndOrSingleSlash) {
+    CompanyAction{ company =>
+    parameters(
+      'id.as[Long]
+    ) {
+      case mapId =>
+        dealFutureResult(
+          UserDao.getUserByMap(mapId.toInt).map { seq =>
+            val data = seq.map{r=>
+              val room=r._1
+              val userNumber=r._2
+              userInfo(room,userNumber)
+            }.toList.sortBy(_.userNumber)
+            complete(userInfoRsp(data))
+          }.recover {
+            case t =>
+              t.printStackTrace()
+              log.error(s"get map by id  error.")
+              complete(CommonRsp(1000004, "internal error."))
+          }
+        )
+    }
+  }
+  }
 
 
 
@@ -237,9 +399,10 @@ trait CompanyService extends AuthService{
 
   val companyRoutes = pathPrefix("company"){
     log.debug("start***")
-    (path("home") | path("login")& get) {
+    (path("home") | path("login")| path("register")& get) {
       getFromResource("html/company.html")
-    } ~ loginSubmit~logout~createMap~mapList~deleteMap~updateMap~uploadMap~getMap
+    } ~ loginSubmit~logout~createMap~mapList~deleteMap~updateMap~uploadMap~getMap~registerSubmit~passwordUpdate~
+    unableMap~ableMap~getUserInfo
 
   }
 }

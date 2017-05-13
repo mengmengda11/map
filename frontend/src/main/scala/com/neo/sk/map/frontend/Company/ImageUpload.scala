@@ -86,7 +86,7 @@ class ImageUpload(
       div(*.cls := "form-group")(
         label(*.cls := "col-md-2 control-label"),
         div(*.cls := "col-md-10")(
-          div(*.cls := "col-md-3")(imageBox),
+          //div(*.cls := "col-md-3")(imageBox),
           div(*.cls := "col-md-9")(
             imageUpload,
             div(*.marginTop := "20px")(

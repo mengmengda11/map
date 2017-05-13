@@ -2,7 +2,7 @@ package com.neo.sk.map.service
 
 import akka.actor.{ActorRef, ActorSystem}
 import akka.http.scaladsl.model.StatusCodes
-import akka.http.scaladsl.server.{Directive, RequestContext}
+import akka.http.scaladsl.server.{Directive, RequestContext, ValidationRejection}
 import akka.http.scaladsl.server
 import com.neo.sk.utils.SessionSupport
 import com.neo.sk.map.common.AppSettings
@@ -13,6 +13,7 @@ import akka.util.Timeout
 import com.neo.sk.map.models._
 import com.neo.sk.map.ptcl
 import com.neo.sk.map.service.SessionBase.UserSession
+import com.sun.xml.internal.ws.encoding.soap.DeserializationException
 import org.slf4j.LoggerFactory
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
@@ -43,9 +44,20 @@ trait AuthService extends BaseService with SessionBase{
   }
 
 
+//  def dealFutureResult(future: ⇒ Future[server.Route]) = onComplete(future) {
+//    case Success(route) =>
+//      route
+//    case Failure(e) =>
+//      e.printStackTrace()
+//      log.warn("internal error: {}", e.getMessage)
+//      complete(ptcl.CommonRsp(100000, "Internal error."))
+//  }
+
+
   def dealFutureResult(future: ⇒ Future[server.Route]) = onComplete(future) {
     case Success(route) =>
       route
+    case Failure(x: DeserializationException) ⇒ reject(ValidationRejection(x.getMessage, Some(x)))
     case Failure(e) =>
       e.printStackTrace()
       log.warn("internal error: {}", e.getMessage)
@@ -85,6 +97,42 @@ trait AuthService extends BaseService with SessionBase{
       case _ =>
         log.debug("no session...")
         redirect(companyUrl, StatusCodes.SeeOther)
+    }
+  }
+
+  def AdminAction(f: Admin => server.Route) = loggingAction { ctx =>
+    val adminUrl = "/hw1701a/admin/login"
+    optionalSession{
+      case Right(session) =>
+        try{
+          val uId = session(SessionKey.userId).toLong
+          val name = session(SessionKey.name)
+          val timestamp = session(SessionKey.timestamp).toLong
+          log.debug("",uId,name)
+          if(System.currentTimeMillis() - timestamp > sessionTimeOut) {
+            log.info("Login failed fot TimeOut.")
+            redirect(adminUrl, StatusCodes.SeeOther)
+          }
+          else {
+            dealFutureResult {
+              CompanyDao.isCompanyExists(uId.toInt).map {
+                case true =>
+                  f(Admin(uId, name, timestamp))
+
+                case false =>
+                  redirect(adminUrl, StatusCodes.SeeOther)
+              }
+            }
+          }
+        }catch {
+          case ex: Exception =>
+            log.info(s"Not Login Yet, ex: $ex")
+            redirect(adminUrl, StatusCodes.SeeOther)
+        }
+
+      case _ =>
+        log.debug("no session...")
+        redirect(adminUrl, StatusCodes.SeeOther)
     }
   }
 

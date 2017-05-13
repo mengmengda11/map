@@ -1,4 +1,4 @@
-package com.neo.sk.map.frontend.Company
+package com.neo.sk.map.frontend.Admin
 
 import com.neo.sk.map.frontend.Routes._
 import com.neo.sk.map.frontend.utils.{Http, Shortcut}
@@ -18,22 +18,14 @@ import scala.concurrent.ExecutionContext.Implicits.global
   * Created by mengmengda on 2017/4/20.
   */
 object Login {
-  val LoginSubmitUrl=CompanyRoute.loginSubmit
-  val RegisterUrl=CompanyRoute.register
-  val HomeUrl=CompanyRoute.home
+  val LoginSubmitUrl=AdminRoute.loginSubmit
+  val HomeUrl=AdminRoute.home
 
   val accountBox = input(*.`type` := "text", *.placeholder := "账号",*.cls:="form-control").render
   val passwordBox = input(*.`type` := "password", *.placeholder := "密码",*.cls:="form-control").render
   val loginButton = button(*.cls:="btn btn-default",*.marginLeft:="50px")("登录").render
   val registerButton=button(*.cls:="btn btn-default",*.marginLeft:="80px")("注册").render
 
-
-  registerButton.onclick={
-    e: MouseEvent =>
-      e.preventDefault()
-      Shortcut.redirect(RegisterUrl)
-
-  }
 
   loginButton.onclick = { e: MouseEvent =>
     e.preventDefault()
@@ -79,7 +71,7 @@ object Login {
         div(*.cls:="col-md-4 col-md-offset-4")(
           form(*.cls:="form-horizontal")(
             div(*.cls:="form-group",*.textAlign.center)(
-              h1("商户登录")
+              h1("管理员登录")
             ),
             div(*.cls:="form-group")(
               label(*.cls:="col-sm-2 control-label")("账号"),
@@ -91,7 +83,7 @@ object Login {
             ),
             div(*.cls:="form-group")(
               div(*.cls:="col-sm-offset-2 col-sm-10")(
-                loginButton,registerButton
+                loginButton
               )
             )
           )
@@ -100,3 +92,4 @@ object Login {
     ).render
   }
 }
+

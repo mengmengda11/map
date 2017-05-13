@@ -31,9 +31,17 @@ object CreatMap {
   ).render
   val imgInput = new ImageUpload(imgBox).render()
 
+  val imageBox = img(
+    *.height := "80px", *.width := "80px",
+    *.src := ""
+  ).render
+  val imageInput = new ImageUpload(imageBox).render()
+
+
+
 
   val mapNameBox=input(*.`type`:="text" ,*.id:="serviceQuestion",*.cls:="form-control").render
-  val mapBox= input(*.`type`:="text" ,*.id:="serviceAnswer",*.cls:="form-control").render
+  val desBox=input(*.`type`:="text" ,*.id:="des",*.cls:="form-control").render
 
   def show = {
     modalDom.setAttribute("style","display:block;background-color:rgba(0, 0, 0, 0.54)")
@@ -42,7 +50,9 @@ object CreatMap {
   def hide = {
     modalDom.setAttribute("style","display:none")
     mapNameBox.value=""
+    desBox.value=""
     imgBox.setAttribute("src","")
+    imageBox.setAttribute("src","")
   }
 
   val cancelButton = button(*.cls := "btn btn-secondary")("取消").render
@@ -67,13 +77,15 @@ object CreatMap {
 
   private def handleAdd()={
     val mapName=mapNameBox.value
+    val des=desBox.value
     //val map=mapBox.value
     val map=imgBox.getAttribute("src")
+    val mapPic=imageBox.getAttribute("src")
 
-    if(mapName==""||map==""){
+    if(mapName==""||map==""||mapPic==""||des==""){
       dom.window.alert("内容不可为空")
     }else{
-      val bodyStr=CreateMapReq(mapName,map).asJson.noSpaces
+      val bodyStr=CreateMapReq(mapName,des,map,mapPic).asJson.noSpaces
       Http.postJsonAndParse[CommonRsp](addMapUrl,bodyStr).foreach{
         case Right(rsp)=>
           rsp.errCode match{
@@ -108,9 +120,16 @@ object CreatMap {
                 mapNameBox
               ),
               div(*.cls:="form-group")(
+                label(*.`for`:="serviceQuestion")("地图描述"),
+                desBox
+              ),
+              div(*.cls:="form-group")(
                 label(*.`for`:="serviceAnswer")("地图文件"),
-                //mapBox
                 imgInput
+              ),
+              div(*.cls:="form-group")(
+                label(*.`for`:="serviceAnswer")("地图二值图"),
+                imageInput
               ),
               cancelButton,confirmBtn
             )

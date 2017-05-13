@@ -26,6 +26,7 @@ trait BaseService extends CirceSupport{
   implicit val timeout: Timeout
 
   val companyActor: ActorRef
+  val adminActor:ActorRef
 
 
 }

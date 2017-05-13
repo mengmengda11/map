@@ -22,6 +22,7 @@ object Routes {
     val home = mapRoot + "/home"
     val path=mapRoot+"/path"
     val text=mapRoot+"/text"
+    def getMap(mapId:Long)=mapRoot+s"/getMap?id=$mapId"
   }
 
   object CompanyRoute{
@@ -37,9 +38,32 @@ object Routes {
     val createMap=companyRoot+"/createMap"
     val mapList=companyRoot+"/maplist"
     def deleteMap(id:Long)=companyRoot+s"/deleteMap?id=$id"
+    def unableMap(id:Long)=companyRoot+s"/unableMap?id=$id"
+    def ableMap(id:Long)=companyRoot+s"/ableMap?id=$id"
     val updateMap=companyRoot+"/updateMap"
     val uploadMap = companyRoot + "/uploadMap"
     def getMap(mapPath: String) = companyRoot + s"/getMap?path=$mapPath"
+    def getUserInfo(mapId:Int)=companyRoot+s"/getUserInfo?id=$mapId"
+  }
+
+  object AdminRoute{
+    val  adminRoot=baseUrl+"/admin"
+    val login=adminRoot+"/login"
+    val loginSubmit =adminRoot + "/loginSubmit"
+    val home=adminRoot+"/home"
+    val resetPas=adminRoot+"/updatePwd"
+    val info=adminRoot+"/info"
+    val logout=adminRoot+"/logout"
+    val companyList=adminRoot+"/companyList"
+    def deleteCompany(id:Long)=adminRoot+s"/deleteCompany?id=$id"
+    def unableCompany(id:Long)=adminRoot+s"/unableCompany?id=$id"
+    def ableCompany(id:Long)=adminRoot+s"/ableCompany?id=$id"
+    def passMap(id:Long)=adminRoot+s"/passMap?id=$id"
+    def notPassMap(id:Long)=adminRoot+s"/notPassMap?id=$id"
+    def getMapByCompany(id:Long)=adminRoot+s"/getMapByCompany?id=$id"
+    def getMap(mapPath: String) = adminRoot + s"/getMap?path=$mapPath"
+    def reviewedMapList=adminRoot+"/reviewedMapList"
+    def noreviewMapList=adminRoot+"/noreviewMapList"
   }
 
 

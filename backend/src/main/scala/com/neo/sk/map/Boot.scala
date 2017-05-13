@@ -50,6 +50,7 @@ object Boot extends HttpService {
   val log: LoggingAdapter = Logging(system, getClass)
 
   override val companyActor = system.actorOf(CompanyActor.props)
+  override val adminActor = system.actorOf(AdminActor.props)
 
 
 

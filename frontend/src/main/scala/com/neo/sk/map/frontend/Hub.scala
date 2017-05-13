@@ -1,6 +1,6 @@
 package com.neo.sk.map.frontend
 
-import com.neo.sk.map.frontend.Company.Login
+import com.neo.sk.map.frontend.Company.{Login, Register}
 import com.neo.sk.map.frontend.map._
 import org.scalajs.dom
 import org.scalajs.dom.html.Heading
@@ -70,13 +70,14 @@ object Hub extends js.JSApp {
           case x => todo(s"map match error: ${paths.mkString("/")}")
         }
         case "company" => paths(1) match {
-          case "login" => Login.render()
+          case "login" => Company.Login.render()
           case "home" => Company.Home.render()
+          case "register"=>Company.Register.render()
           case x => todo(s"map match error: ${paths.mkString("/")}")
         }
         case "admin" => paths(1) match {
-          case "home" => todo(paths(1))
-          case "login" => todo(paths(1))
+          case "home" => Admin.Home.render()
+          case "login" => Admin.Login.render()
           case x => todo(s"admin match error: ${paths.mkString("/")}")
         }
         case "zttests" => paths(1) match {
