@@ -30,17 +30,17 @@ object CompanyDao {
 
   def deleteCompany(companyId:Int) = db.run{
     tCompany.filter(_.id === companyId).delete
-    tMaps.filter(_.companyid===companyId).delete
+   // tMaps.filter(_.companyid===companyId).delete
   }
 
   def unableCompany(companyId:Int) = db.run{
     tCompany.filter(_.id === companyId).map(_.state).update(0)
-    tMaps.filter(_.companyid===companyId).map(_.state).update(0)
+   // tMaps.filter(_.companyid===companyId).map(_.state).update(0)
   }
 
   def ableCompany(companyId:Int) = db.run{
     tCompany.filter(_.id === companyId).map(_.state).update(1)
-    tMaps.filter(_.companyid===companyId).map(_.state).update(1)
+   // tMaps.filter(_.companyid===companyId).map(_.state).update(1)
   }
 
   def getCompanyById(companyId: Int) = db.run{

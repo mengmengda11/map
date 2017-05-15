@@ -31,6 +31,7 @@ object Path extends Component[Div]{
   val content = p(*.textAlign := "center")("map")
   val startDiv=div().render
   val endDiv=div().render
+  val roomDiv=div().render
   var lineList:ListBuffer[Div]=new ListBuffer[Div]
   val paramStr =
     Option(dom.document.getElementById("urlSearch"))
@@ -42,7 +43,7 @@ object Path extends Component[Div]{
 
   val counter = new Counter("hello", 10)
 
-  def getSvg(svg:String)= {
+  def getSvg(svg:String):Node= {
 
     val svg = iframe(*.id := "svg")(*.src := "/hw1701a/static/img/newmap.svg", *.width := "100%", *.height := "600px").render
     val inputDom = input(*.placeholder := "counter name").render
@@ -225,12 +226,78 @@ object Path extends Component[Div]{
     }
 
 
+    //选择类别
+    val stateRoom = select(*.cls:="form-control",*.width:="150px")(
+      option(*.selected := "selected", *.disabled := "disabled")("--类型选择--"),
+      option(*.value := s"food")("餐厅"),
+      option(*.value := s"clothes")("衣服"),
+      option(*.value := s"shoes")("鞋子"),
+      option(*.value := s"weishengjian")("卫生间")
+    ).render
+
+    stateRoom.onchange={e:Event=>handleRoom()}
+    def handleRoom()={
+      println("change********")
+      val roomClass=stateRoom.value
+      if(roomClass=="selected"){
+        JsFunc.alert("请选择类别")
+      }else{
+        val houses = dom.document.getElementById("svg").asInstanceOf[IFrame].contentDocument.getElementsByClassName("house")
+        for (i <- 0 to houses.length - 1) {
+          val houseSvg = houses(i).asInstanceOf[dom.Element]
+          val houseClass = houseSvg.getAttribute("room")
+          val houseName=houseSvg.getAttribute("name")
+          val doorx = houseSvg.getAttribute("doorx").toInt
+          val doory = houseSvg.getAttribute("doory").toInt
+//          println("houseClass"+houseClass)
+//          println("roomClass*********"+roomClass)
+          if(houseClass==roomClass){
+            println("houseClass+++++++++++++"+houseClass)
+            println("doorx"+doorx+"doory"+doory)
+            println("houseName"+houseName)
+            val roomDom = img(*.id:=s"img-name${houseName}",*.width := "10px", *.height := "20px", *.left := s"${doorx}px", *.top := s"${doory + 72}px", *.position.absolute, *.visibility.visible, *.src := "/hw1701a/static/img/weizhi.jpg").render
+            roomDiv.appendChild(roomDom)
+            roomDiv.setAttribute("id",s"div-name${houseName}")
+            document.body.appendChild(roomDiv)
+          }
+        }
+      }
+    }
+
+    val changeRoomBtn=button("重新选择类别").render
+    changeRoomBtn.onclick={ e: MouseEvent =>
+      val roomClass=stateRoom.value
+      if(roomClass=="selected"){
+
+      }else{
+        val houses = dom.document.getElementById("svg").asInstanceOf[IFrame].contentDocument.getElementsByClassName("house")
+        for (i <- 0 to houses.length - 1) {
+          val houseSvg = houses(i).asInstanceOf[dom.Element]
+          val houseClass = houseSvg.getAttribute("room")
+          val houseName=houseSvg.getAttribute("name")
+
+          if(houseClass==roomClass){
+            println("houseName+++++++++++++"+houseName)
+            val deleteDom=dom.document.getElementById(s"div-name${houseName}")
+            document.body.removeChild(deleteDom)
+
+          }
+        }
+      }
+
+
+
+    }
+
+
+
     div(
       title,
       svg,
       startBox,endBox,
       changeNameButton,
-      restartButton
+      restartButton,
+      stateRoom,changeRoomBtn
     ).render
 
   }
